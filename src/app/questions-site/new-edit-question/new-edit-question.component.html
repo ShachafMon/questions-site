@@ -1,0 +1,31 @@
+<div class="main-container">
+    <button (click)="exit()">X</button>
+    <div class="get-flex">
+        <div class="get-flex get-flex-center">
+            <div class="container">
+                <form class="get-flex get-flex-column" #loginForm [formGroup]="newQuestionForm"
+                    (ngSubmit)="submitQuestion()">
+                    <div class="get-flex">
+                        <div>
+                            <div>Name</div>
+                            <input type="text" formControlName="name">
+                        </div>
+                        <small class="alert" *ngIf="name.touched && !name.valid" class="error">Name must contains at
+                            least 3
+                            chars</small>
+                    </div>
+                    <div class="get-flex">
+                        <div>
+                            <div>Description</div>
+                            <textarea formControlName="description" rows="25" id="descriptionInput"></textarea>
+                        </div>
+                        <small class="alert" *ngIf="description.touched && !description.valid">
+                            Description must contains at least 3 chars
+                        </small>
+                    </div>
+                    <button id="sumbitBtn" type="submit" [disabled]="!newQuestionForm.valid">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

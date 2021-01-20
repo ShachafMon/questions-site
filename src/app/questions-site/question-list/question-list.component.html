@@ -1,0 +1,56 @@
+<div class="get-flex main-container">
+    <div class="get-flex get-flex-center flex-column">
+        <div class="get-flex space-between window-width get-padding">
+            <div id="searchbar">
+                <input #searchInput type="text" (keyup)="search(searchInput.value)">
+                <i>Search</i>
+            </div>
+            <div>
+                <select #selection (change)="orderBy(selection.value)">
+                    <option value="" disabled selected hidden>Order by</option>
+                    <option value="Id">Id</option>
+                    <option value="Name">Name</option>
+                    <option value="Date">Date</option>
+                </select>
+                <button (click)='logout()'>Logout</button>
+            </div>
+        </div>
+        <table id="questionsTable">
+            <thead>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Date</th>
+                <th></th>
+            </thead>
+            <tbody>
+                <tr *ngFor="let question of questions">
+                    <td>{{question.id}}</td>
+                    <td>{{question.name}}</td>
+                    <td>{{question.creationDate | date:'shortDate'}}</td>
+                    <td>
+                        <button (click)="onEditQuestion(question)">Edit</button>
+                        <button (click)="onRemoveQuestion(question)">Remove</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="window-width get-flex">
+            <div class="get-flex-end">
+                <button (click)="OnCreateNewQuestion()">Add Question</button>
+            </div>
+        </div>
+    </div>
+    <app-new *ngIf="showNewEditComp()"></app-new>
+</div>
+<div class="popup" *ngIf="showPopup">
+    <div class="popup-content get-padding window-width">
+        <div class="get-flex get-flex-center flex-column">
+            <div class="get-flex center window-width get-padding">Are you sure you want to remove {{currentQuestion.name}}?</div>
+            <div class="get-flex center window-width">{{currentQuestion.description}}</div>
+            <div class="get-flex space-around window-width get-padding">
+                <button class="accept" (click)="removeQuestion()">Yes</button>
+                <button class="decline"(click)="exitPopup()">No</button>
+            </div>
+        </div>
+    </div>
+</div>

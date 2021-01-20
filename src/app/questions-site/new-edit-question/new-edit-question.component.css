@@ -1,0 +1,31 @@
+.alert {
+    color: red;
+}
+
+.get-flex-column {
+    flex-direction: column;
+}
+
+.edit-container {
+    width  : 100%;
+    display: -webkit-box;
+}
+
+.get-flex {
+    display: flex;
+}
+
+.main-container {
+    height          : 100%;
+    padding-right   : 1vw;
+    padding-left    : 1vw;
+    background-color: lightgray;
+}
+
+#descriptionInput {
+    height: 80%;
+}
+
+#sumbitBtn {
+    justify-content: flex-end;
+}
