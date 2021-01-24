@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { Question } from 'src/app/models/question.model';
 import { NewEditService } from '../new-edit-question/new-edit.service';
 import { AuthenticationService } from '../Services/authentication.service';
@@ -12,36 +13,40 @@ import { QuestionsService } from '../Services/questions.service';
 })
 export class QuestionListComponent implements OnInit, OnDestroy {
 
-  constructor(private questionService: QuestionsService, private newEditService: NewEditService, private router: Router, private authService: AuthenticationService) { 
-    this.questionService.questionsSubj.subscribe(data => this.questions = data);
+  subsuribes: Subscription[] = [];
+  constructor(private questionService: QuestionsService, private newEditService: NewEditService, private router: Router, private authService: AuthenticationService) {
   }
-
-  showNewEditComp = () => this.newEditService.showEditAddComp;
+  showNewEditComp: boolean;
   questions: Question[];
-  showPopup: boolean;
+  deletePopup: boolean;
+  infoPopup: boolean;
   currentQuestion: Question;
   ngOnInit(): void {
     if (!this.authService.checkToken()) {
       alert(`Access token didn't found!`);
       this.router.navigate(['/']);
     }
+    this.subsuribes.push(this.questionService.questionsSubj.subscribe(data => this.questions = data));
+    this.subsuribes.push(this.newEditService.showEditAddCompSbj.subscribe(data=>this.showNewEditComp = data));
     this.questionService.GetQuestions();
   }
 
   OnCreateNewQuestion() {
+    this.showNewEditComp = true;
     this.newEditService.setCurrentQuestion(undefined);
   }
 
   ngOnDestroy() {
-    this.questionService.questionsSubj.unsubscribe();
+    this.subsuribes.forEach((sub) => { sub.unsubscribe(); })
   }
   onEditQuestion(question: Question) {
     this.newEditService.setCurrentQuestion(question);
+    this.showNewEditComp = true;
   }
 
   onRemoveQuestion(question: Question) {
     this.currentQuestion = question;
-    this.showPopup = true;
+    this.deletePopup = true;
   }
 
   removeQuestion() {
@@ -51,7 +56,13 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   }
   exitPopup() {
     this.currentQuestion = null;
-    this.showPopup = false;
+    this.deletePopup = false;
+    this.infoPopup = false;
+  }
+
+  showInfo(question: Question) {
+    this.currentQuestion = question;
+    this.infoPopup = true;
   }
 
   orderBy(selected: string) {
@@ -70,10 +81,7 @@ export class QuestionListComponent implements OnInit, OnDestroy {
         break;
     }
   }
-  logout() {
-    this.authService.removeCookie();
-    this.router.navigate(['/']);
-  }
+
   search(search: string) {
     this.questions = this.questionService.questions.filter(ques => ques.name.toLowerCase().includes(search.toLowerCase()));
   }

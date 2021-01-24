@@ -15,7 +15,7 @@ export class LoginComponent implements OnInit {
   passRegex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])");
   wrongLogin: boolean;
   loginForm: FormGroup;
-  rememberme : boolean;
+  rememberme: boolean;
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required]],
@@ -26,15 +26,7 @@ export class LoginComponent implements OnInit {
 
   async submitLogin() {
     if (this.loginForm.valid) {
-      this.http.Login(this.loginForm.value).subscribe(
-        data => {
-          this.authService.setToken(data['token']);
-          this.router.navigate(['/manager']);
-        },
-        error => {
-          this.wrongLogin = true;
-        }
-      )
+      this.authService.login(this.loginForm).then(() => this.router.navigate(['/manager'])).catch(()=>this.wrongLogin = true);
     }
   }
   get username() { return this.loginForm.get('username') }

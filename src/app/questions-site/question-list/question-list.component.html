@@ -1,6 +1,6 @@
-<div class="get-flex main-container">
-    <div class="get-flex get-flex-center flex-column">
-        <div class="get-flex space-between window-width get-padding">
+<div class="flex main-container">
+    <div class="flex flex-center flex-column">
+        <div class="flex space-between window-width padding">
             <div id="searchbar">
                 <input #searchInput type="text" (keyup)="search(searchInput.value)">
                 <i>Search</i>
@@ -12,21 +12,20 @@
                     <option value="Name">Name</option>
                     <option value="Date">Date</option>
                 </select>
-                <button (click)='logout()'>Logout</button>
             </div>
         </div>
         <table id="questionsTable">
             <thead>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Date</th>
-                <th></th>
+                <th id="idth">ID</th>
+                <th id="nameth">Name</th>
+                <th id="dateth">Date</th>
+                <th id="functionsth"></th>
             </thead>
             <tbody>
                 <tr *ngFor="let question of questions">
-                    <td>{{question.id}}</td>
-                    <td>{{question.name}}</td>
-                    <td>{{question.creationDate | date:'shortDate'}}</td>
+                    <td (click)="showInfo(question)">{{question.id}}</td>
+                    <td (click)="showInfo(question)">{{question.name}}</td>
+                    <td (click)="showInfo(question)">{{question.creationDate | date:'shortDate'}}</td>
                     <td>
                         <button (click)="onEditQuestion(question)">Edit</button>
                         <button (click)="onRemoveQuestion(question)">Remove</button>
@@ -34,23 +33,32 @@
                 </tr>
             </tbody>
         </table>
-        <div class="window-width get-flex">
-            <div class="get-flex-end">
+        <div class="window-width flex flex-end padding">
                 <button (click)="OnCreateNewQuestion()">Add Question</button>
+        </div>
+    </div>
+    <app-new *ngIf="showNewEditComp"></app-new>
+</div>
+<div class="popup" *ngIf="deletePopup">
+    <div class="popup-content padding window-width">
+        <div class="flex flex-center flex-column">
+            <div class="flex center window-width padding">Are you sure you want to remove
+                {{currentQuestion.name}}?</div>
+            <div class="flex center window-width">{{currentQuestion.description}}</div>
+            <div class="flex space-around window-width padding">
+                <button class="accept" (click)="removeQuestion()">Yes</button>
+                <button class="decline" (click)="exitPopup()">No</button>
             </div>
         </div>
     </div>
-    <app-new *ngIf="showNewEditComp()"></app-new>
 </div>
-<div class="popup" *ngIf="showPopup">
-    <div class="popup-content get-padding window-width">
-        <div class="get-flex get-flex-center flex-column">
-            <div class="get-flex center window-width get-padding">Are you sure you want to remove {{currentQuestion.name}}?</div>
-            <div class="get-flex center window-width">{{currentQuestion.description}}</div>
-            <div class="get-flex space-around window-width get-padding">
-                <button class="accept" (click)="removeQuestion()">Yes</button>
-                <button class="decline"(click)="exitPopup()">No</button>
-            </div>
+
+<div class="popup" *ngIf="infoPopup">
+    <div class="popup-content padding window-width">
+        <div class="flex flex-center flex-column">
+            <div class="flex center window-width padding">{{currentQuestion.name}}</div>
+            <div class="flex center window-width">{{currentQuestion.description}}</div>
+            <button class="button" (click)="exitPopup()">Ok</button>
         </div>
     </div>
 </div>

@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 import { Question } from '../../models/question.model';
 import { User } from '../../models/user.model';
@@ -10,9 +11,9 @@ import { AuthenticationService } from './authentication.service';
 })
 export class HttpService {
 
-  constructor(private http: HttpClient, private authService: AuthenticationService) { }
+  constructor(private http: HttpClient, private cookieService : CookieService) { }
 
-  headers = () => new HttpHeaders({ "authorization": `${this.authService.getToken()}` });
+  headers = () => new HttpHeaders({ "authorization": `${this.cookieService.get('authToken')}` });
   private baseUrl = 'http://localhost:3000';
 
   Login(user: User): Observable<Object> {

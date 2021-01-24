@@ -1,16 +1,18 @@
-.get-flex {
+.flex {
     display: flex;
     width  : 100%;
 }
-.get-padding{
+
+.padding {
     padding: 1vw;
 }
+
 .main-container {
     height: 100%;
 }
 
-.get-flex-center {
-    align-items    : center;
+.flex-center {
+    align-items: center;
 }
 
 #questionsTable {
@@ -36,11 +38,12 @@
 .space-between {
     justify-content: space-between;
 }
-.space-around{
+
+.space-around {
     justify-content: space-around;
 }
 
-.get-flex-end {
+.flex-end {
     justify-content: flex-end;
 }
 
@@ -51,7 +54,7 @@
 #questionsTable th {
     padding-top     : 8px;
     padding-bottom  : 8px;
-    text-align      : left;
+    text-align      : center;
     background-color: lightgray;
     color           : black;
 }
@@ -75,9 +78,34 @@
     padding         : 20px;
     border          : 2px solid #888;
     width           : 50%;
-    border-radius: 10px;
+    border-radius   : 10px;
 }
-.center{
+
+.center {
     justify-content: center;
-    align-items: center;
+    align-items    : center;
+}
+
+
+td{
+    text-align: center;
+}
+
+#nameth {
+    width: 50%;
+}
+
+#idth {
+    width: 15%;
+}
+
+#dateth {
+    width: 15%;
+}
+
+#functionsth {
+    width: 20%;
+}
+.flex-end{
+    justify-items: flex-start;
 }

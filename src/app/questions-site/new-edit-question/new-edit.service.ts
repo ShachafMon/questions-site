@@ -12,16 +12,21 @@ export class NewEditService {
   private currentQuestion: Question;
   public currentQuestionSbj: Subject<Question> = new Subject<Question>();
   showEditAddComp = false;
+  public showEditAddCompSbj: Subject<boolean> = new Subject<boolean>();
 
   setCurrentQuestion(currentQuestion: Question) {
     this.currentQuestion = currentQuestion;
     this.currentQuestionSbj.next(this.currentQuestion);
-    this.showEditAddComp = true;
+    if (currentQuestion)
+      this.show();
   }
   getCurrentQuestion(): Question {
     return this.currentQuestion;
   }
-
+  show() {
+    this.showEditAddComp = true;
+    this.showEditAddCompSbj.next(this.showEditAddComp);
+  }
   checkIfSelectedCurrentQuestion(): boolean {
     return this.currentQuestion == null;
   }
@@ -32,13 +37,12 @@ export class NewEditService {
   }
 
   addQuestion(question: Question) {
-    console.log(question);
     this.questionService.addQuestion(question);
     this.reset();
   }
   reset() {
     this.setCurrentQuestion(undefined);
     this.showEditAddComp = false;
+    this.showEditAddCompSbj.next(this.showEditAddComp);
   }
-
 }

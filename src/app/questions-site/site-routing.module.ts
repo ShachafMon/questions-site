@@ -9,7 +9,6 @@ const routes: Routes = [
   {
     path: 'manager', component: ManagerComponent, children:
       [
-
         { path: '', redirectTo: 'questions', pathMatch: 'full' },
         { path: 'questions', component: QuestionListComponent },
         { path: 'charts', component: ChartsComponent }
