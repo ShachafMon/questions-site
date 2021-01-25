@@ -12,23 +12,27 @@ import { Subscription } from 'rxjs';
 })
 export class PieChartComponent implements OnInit, OnDestroy {
 
-  @Input() chartData: any[];
   chart: am4charts.PieChart;
+  private subs: Subscription[] = [];
 
-  constructor() {
+  constructor(private chartService: ChartsService) {
   }
 
   ngOnInit(): void {
-    am4core.useTheme(am4themes_animated);
-    this.chart = am4core.create("pie-chart-div", am4charts.PieChart);
-    this.chart.data = this.chartData;
-    this.createAllSeries();
-    this.chart.legend = new am4charts.Legend();
-  };
+    this.subs.push(this.chartService.chartdataSubj.subscribe(data => {
+      if (data) {
+        am4core.useTheme(am4themes_animated);
+        this.chart = am4core.create("pie-chart-div", am4charts.PieChart);
+        this.chart.data = data;
+        this.createAllSeries();
+        this.chart.legend = new am4charts.Legend();
+      }
+    }));
+  }
 
   ngOnDestroy() {
-   
     this.chart?.dispose();
+    this.subs.forEach((item) => item.unsubscribe());
   }
   createAllSeries() {
     let pieSeries = this.chart.series.push(new am4charts.PieSeries());

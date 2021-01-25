@@ -12,25 +12,29 @@ import { Subscription } from 'rxjs';
 })
 export class XyChartComponent implements OnInit, OnDestroy {
 
-  constructor() {
+  constructor(private chartService: ChartsService) {
 
   }
-  @Input() chartData: any[];
-  @Input() hoursAdded : number[];
+  private subs: Subscription[] = [];
   chart: am4charts.XYChart;
 
   ngOnInit(): void {
-    am4core.useTheme(am4themes_animated);
+    this.subs.push(this.chartService.chartdataSubj.subscribe(data => {
+      if (data) {
+        am4core.useTheme(am4themes_animated);
+        this.chart = am4core.create("xy-chart-div", am4charts.XYChart);
+        this.chart.data = data;
+        this.createAxes();
+        this.createAllSeries(this.chartService.hoursAdded);
+        this.chart.legend = new am4charts.Legend();
+      }
+    }));
 
-    this.chart = am4core.create("xy-chart-div", am4charts.XYChart);
-    this.chart.data = this.chartData;
-    this.createAxes();
-    this.createAllSeries();
-    this.chart.legend = new am4charts.Legend();
   };
 
   ngOnDestroy() {
     this.chart?.dispose();
+    this.subs.forEach((item) => item.unsubscribe());
   }
 
   createAxes() {
@@ -45,8 +49,8 @@ export class XyChartComponent implements OnInit, OnDestroy {
     valueAxis.min = 0;
   }
 
-  createAllSeries() {
-    this.hoursAdded.forEach((item) => {
+  createAllSeries(hoursAdded) {
+    hoursAdded.forEach((item) => {
       this.createSeries(item, `${item}:00`);
     })
   }

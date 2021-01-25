@@ -14,8 +14,6 @@ import { QuestionsService } from '../Services/questions.service';
 export class ManagerComponent implements OnInit {
 
   constructor() { }
-  ngOnInit()
-  {
-
+  ngOnInit() {
   }
 }

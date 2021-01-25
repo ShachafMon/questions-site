@@ -26,9 +26,11 @@ export class QuestionListComponent implements OnInit, OnDestroy {
       alert(`Access token didn't found!`);
       this.router.navigate(['/']);
     }
-    this.subsuribes.push(this.questionService.questionsSubj.subscribe(data => this.questions = data));
-    this.subsuribes.push(this.newEditService.showEditAddCompSbj.subscribe(data=>this.showNewEditComp = data));
-    this.questionService.GetQuestions();
+    this.subsuribes.push(this.questionService.questionsSubj.subscribe(data => {
+      if (data)
+        this.questions = data;
+    }));
+    this.subsuribes.push(this.newEditService.showEditAddCompSbj.subscribe(data => this.showNewEditComp = data));
   }
 
   OnCreateNewQuestion() {

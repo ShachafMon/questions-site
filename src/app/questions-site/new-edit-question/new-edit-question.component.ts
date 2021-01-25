@@ -29,16 +29,18 @@ export class NewComponent implements OnInit, OnDestroy {
       name: [this.question?.name, [Validators.required, Validators.minLength(3)]],
       description: [this.question?.description, [Validators.required, Validators.minLength(3)]],
       id: [''],
-      creationDate :['']
+      creationDate : ''
     });
   }
 
   submitQuestion() {
     if (!this.question) {
+      debugger;
       this.newQuestionForm.controls['creationDate'].setValue(new Date());
       this.newEditService.addQuestion(this.newQuestionForm.value);
     } else {
       this.newQuestionForm.controls['id'].setValue(this.question.id);
+      this.newQuestionForm.controls['creationDate'].setValue(new Date(this.question.creationDate));
       this.newEditService.UpdateQuestion(this.newQuestionForm.value);
     }
   }

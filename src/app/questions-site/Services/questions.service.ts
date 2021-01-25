@@ -1,7 +1,7 @@
 import { Injectable, OnInit } from '@angular/core';
 import { Question } from '../../models/question.model';
 import { HttpService } from './http.service';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthenticationService } from './authentication.service';
 
@@ -9,10 +9,12 @@ import { AuthenticationService } from './authentication.service';
   providedIn: 'root'
 })
 export class QuestionsService implements OnInit {
-  questions: Question[];
-  public questionsSubj = new Subject<Question[]>();
-  constructor(private http: HttpService, private router: Router, private authService: AuthenticationService) { this.GetQuestions(); }
+  questions: Question[] = [];
+  public questionsSubj = new BehaviorSubject<Question[]>(undefined);
+    
+    constructor(private http: HttpService, private router: Router, private authService: AuthenticationService) { this.GetQuestions(); }
   ngOnInit() {
+
   }
 
   GetQuestions() {
@@ -34,6 +36,7 @@ export class QuestionsService implements OnInit {
         alert("Question was updated");
         var newQuest = data['newQuestion'];
         var quest: Question = this.questions.find((ques) => ques.id == newQuest.id);
+        this.questionsSubj.next(this.questions);
         if (quest) {
           quest.name = newQuest.name;
           quest.description = newQuest.description;
@@ -49,6 +52,7 @@ export class QuestionsService implements OnInit {
       data => {
         alert(data['message']);
         this.questions.push(data['qa']);
+        this.questionsSubj.next(this.questions);
       },
       error => { alert(error['error']['message']); }
     )

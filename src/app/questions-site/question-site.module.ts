@@ -12,6 +12,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { QuestionListComponent } from './question-list/question-list.component';
 import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { XyChartComponent } from './charts/xy-chart/xy-chart.component';
+import { QuestionsService } from './Services/questions.service';
 
 
 
@@ -25,6 +26,7 @@ import { XyChartComponent } from './charts/xy-chart/xy-chart.component';
     RouterModule,
     SiteRoutingModule
   ],
+  providers:[QuestionsService],
   exports: [ManagerComponent, LoginComponent, NavbarComponent]
 })
 export class QuestionSiteModule { }
