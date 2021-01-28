@@ -74,7 +74,7 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   orderBy(selected: string) {
     switch (selected) {
       case 'Id':
-        this.questions.sort((ques1, quest2) => (ques1.id > quest2.id) ? 1 : -1);
+        this.questions.sort((ques1, quest2) => (parseInt(ques1.id.slice(1)) > parseInt(quest2.id.slice(1))) ? 1 : -1);
         break;
       case 'Name':
         this.questions.sort((ques1, quest2) => (ques1.name.toLowerCase() > quest2.name.toLowerCase()) ? 1 : -1);

@@ -29,7 +29,7 @@ export class XyChartComponent implements OnInit, OnDestroy {
         this.hoursCounterDic = this.chartService.hoursCounterDic;
         if (this.chart)
           this.chart.dispose();
-          this.getFivePopular();
+        this.getFivePopular();
         this.makeChart(data);
       }
     }));
@@ -110,22 +110,22 @@ export class XyChartComponent implements OnInit, OnDestroy {
 
     // Configure columns
     series.columns.template.width = am4core.percent(60);
-    series.columns.template.tooltipText = "[bold]{name}[/]\n[font-size:14px]{categoryX}: {valueY}";
-    // series.columns.template.tooltipHTML = `
-    // <div>
-    //   <div>
-    //     <center><strong>{categoryX}</strong></center>
-    //   </div>
-    //   <div class="space-setween">
-    //     <div>
-    //       test
-    //     </div>
-    //     <div>
-    //     {valueY}
-    //     </div>
-    //   </div>
-    // </div>
-    // `
+    //series.columns.template.tooltipText = "[bold]{name}[/]\n[font-size:14px]{categoryX}: {valueY}";
+    series.columns.template.tooltipHTML = new am4core.Tooltip().tooltipHTML = `
+    <div style="display:flex; flex-direction:column; font-size:15px">
+      <div style="align-self:center;">
+        {categoryX}
+      </div>
+      <div style="display:flex; justify-content:space-between;">
+        <div>
+          test
+        </div>
+        <div>
+        {valueY} Questions
+        </div>
+      </div>
+    </div>
+    `
 
     // Add label
     let labelBullet = series.bullets.push(new am4charts.LabelBullet());
