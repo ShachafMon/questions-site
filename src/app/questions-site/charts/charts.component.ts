@@ -1,6 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
-import { ChartsService } from './charts.service';
 
 @Component({
   selector: 'app-charts',
@@ -11,7 +9,7 @@ export class ChartsComponent implements OnInit {
 
   chartsData: any[];
   hoursAdded: number[];
-  
+  selectedDate : Date;
   constructor() {
    
   }

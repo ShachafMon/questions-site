@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { IQuestion } from 'src/app/models/question.model';
+import { IQuestion } from 'src/app/shared/models/question.model';
 import { QuestionsService } from '../../../Services/questions.service';
 
 @Injectable({

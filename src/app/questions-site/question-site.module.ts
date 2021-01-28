@@ -13,6 +13,7 @@ import { QuestionListComponent } from './manager/question-list/question-list.com
 import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { XyChartComponent } from './charts/xy-chart/xy-chart.component';
 import { QuestionsService } from './Services/questions.service';
+import { NzDatePickerModule } from 'ng-zorro-antd';
 
 
 
@@ -24,7 +25,8 @@ import { QuestionsService } from './Services/questions.service';
     ReactiveFormsModule,
     MatDialogModule,
     RouterModule,
-    SiteRoutingModule
+    SiteRoutingModule,
+    NzDatePickerModule
   ],
   providers:[QuestionsService],
   exports: [ManagerComponent, LoginComponent, NavbarComponent]

@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
@@ -18,13 +18,17 @@ export class XyChartComponent implements OnInit, OnDestroy {
   private subs: Subscription[] = [];
   chart: am4charts.XYChart;
   chartData: any[];
-  showPopular: boolean;
+  showPopular: boolean = false;;
+  hoursCounterDic: { [hour: number]: number };
+  popularHours: { [hour: string]: number } = { 'others': 0 };
 
   ngOnInit(): void {
     this.subs.push(this.chartService.chartdataSubj.subscribe(data => {
       if (data) {
         this.chartData = data;
-        this.makeChart(this.chartData);
+        this.hoursCounterDic = this.chartService.hoursCounterDic;
+        this.makeChart(data);
+        this.getFivePopular();
       }
     }));
   };
@@ -34,18 +38,33 @@ export class XyChartComponent implements OnInit, OnDestroy {
     this.chart = am4core.create("xy-chart-div", am4charts.XYChart);
     this.chart.data = data;
     this.createAxes();
-    this.createAllSeries(this.chartService.hoursCounterDic);
+    if (this.showPopular)
+      this.createAllSeries(this.popularHours);
+    else
+      this.createAllSeries(this.hoursCounterDic);
     this.chart.legend = new am4charts.Legend();
   }
 
+  getFivePopular() {
+    let tempArr = Object.entries(this.hoursCounterDic).sort((a, b) => b[1] - a[1]).splice(0, 5);
+    tempArr.forEach(element => {
+      this.popularHours[element[0]] = element[1];
+    });
+    this.chartData.forEach(item => {
+      Object.entries(item).forEach(inner => {
+        if (!isNaN(parseInt(inner[0])) && !this.popularHours[inner[0]]) {
+          item['others'] ? item['others'] += parseInt(`${inner[1]}`) : item['others'] = parseInt(`${inner[1]}`)
+        }
+      });
+    })
+    console.log(this.chartData);
+  }
+
   onPopularChanged() {
-    if (this.showPopular) {
-      //this.chart.dispose();
-
-
-    } else {
-
-    }
+    if (this.popularHours)
+      this.makeChart(this.chartData);
+    else
+      this.showPopular = !this.showPopular;
   }
 
   ngOnDestroy() {
@@ -58,7 +77,6 @@ export class XyChartComponent implements OnInit, OnDestroy {
     categoryAxis.dataFields.category = "day";
     categoryAxis.renderer.grid.template.location = 0;
 
-
     let valueAxis = this.chart.yAxes.push(new am4charts.ValueAxis());
     valueAxis.renderer.inside = true;
     valueAxis.renderer.labels.template.disabled = true;
@@ -67,7 +85,7 @@ export class XyChartComponent implements OnInit, OnDestroy {
 
   createAllSeries(hours) {
     for (const [key, value] of Object.entries(hours)) {
-      this.createSeries(key, `${key}:00`);
+      this.createSeries(key, key);
     }
   }
 
@@ -75,32 +93,36 @@ export class XyChartComponent implements OnInit, OnDestroy {
   createSeries(field, name) {
     // Set up series
     let series = this.chart.series.push(new am4charts.ColumnSeries());
-    series.name = name;
+    if (name == 'others') {
+      series.name = name;
+    } else
+      series.name = `${name}:00`;
     series.dataFields.valueY = field;
     series.dataFields.categoryX = "day";
     series.sequencedInterpolation = true;
+
 
     // Make it stacked
     series.stacked = true;
 
     // Configure columns
     series.columns.template.width = am4core.percent(60);
-    // series.columns.template.tooltipHTML = "[bold]{name}[/]\n[font-size:14px]{categoryX}: {valueY}";
-    series.columns.template.tooltipHTML = `
-    <div>
-      <div>
-        <center><strong>{categoryX}</strong></center>
-      </div>
-      <div class="space-setween">
-        <div>
-          test
-        </div>
-        <div>
-        {valueY}
-        </div>
-      </div>
-    </div>
-    `
+    series.columns.template.tooltipText = "[bold]{name}[/]\n[font-size:14px]{categoryX}: {valueY}";
+    // series.columns.template.tooltipHTML = `
+    // <div>
+    //   <div>
+    //     <center><strong>{categoryX}</strong></center>
+    //   </div>
+    //   <div class="space-setween">
+    //     <div>
+    //       test
+    //     </div>
+    //     <div>
+    //     {valueY}
+    //     </div>
+    //   </div>
+    // </div>
+    // `
 
     // Add label
     let labelBullet = series.bullets.push(new am4charts.LabelBullet());

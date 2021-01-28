@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { IQuestion } from '../../models/question.model';
+import { IQuestion } from '../../shared/models/question.model';
 import { HttpService } from './http.service';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Router } from '@angular/router';

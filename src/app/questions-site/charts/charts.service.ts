@@ -1,7 +1,6 @@
-import { Dictionary } from '@amcharts/amcharts4/core';
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { IQuestion } from 'src/app/models/question.model';
+import { IQuestion } from 'src/app/shared/models/question.model';
 import { QuestionsService } from '../Services/questions.service';
 
 @Injectable({

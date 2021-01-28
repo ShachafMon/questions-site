@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { IQuestion } from 'src/app/models/question.model';
+import { IQuestion } from 'src/app/shared/models/question.model';
 import { NewEditService } from './new-edit.service';
 
 @Component({
