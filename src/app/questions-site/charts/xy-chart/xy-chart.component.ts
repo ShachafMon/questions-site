@@ -29,8 +29,8 @@ export class XyChartComponent implements OnInit, OnDestroy {
         this.hoursCounterDic = this.chartService.hoursCounterDic;
         if (this.chart)
           this.chart.dispose();
+          this.getFivePopular();
         this.makeChart(data);
-        this.getFivePopular();
       }
     }));
   };
@@ -48,6 +48,7 @@ export class XyChartComponent implements OnInit, OnDestroy {
   }
 
   getFivePopular() {
+    this.popularHours = { 'others': 0 };
     let tempArr = Object.entries(this.hoursCounterDic).sort((a, b) => b[1] - a[1]).splice(0, 5);
     tempArr.forEach(element => {
       this.popularHours[element[0]] = element[1];
