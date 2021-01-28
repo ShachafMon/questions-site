@@ -5,5 +5,4 @@ export class IdHtmlTransform implements PipeTransform {
     transform(id: string): string {
         return `<small>${id[0]}</small><strong>${id.slice(1)}</strong>`
     }
-
 }

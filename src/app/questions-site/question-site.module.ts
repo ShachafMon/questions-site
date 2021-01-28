@@ -27,8 +27,7 @@ import { IdHtmlTransform } from '../shared/pipes/id-html.pipe';
     MatDialogModule,
     RouterModule,
     SiteRoutingModule,
-    NzDatePickerModule
-    
+    NzDatePickerModule    
   ],
   providers:[QuestionsService],
   exports: [ManagerComponent, LoginComponent, NavbarComponent]
