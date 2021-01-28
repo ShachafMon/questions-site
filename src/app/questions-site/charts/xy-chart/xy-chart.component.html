@@ -1,2 +1,9 @@
-<div id="xy-chart-div" class="half-page"></div>
+<div class='flex'>
+    <div class='flex-start'>
+        <input type="checkbox" [(ngModel)]="showPopular" (change)="onPopularChanged()">
+        <label>Show popular only</label>
+    </div>
+
+</div>
+<div id="xy-chart-div" class="half-page" ></div>
 

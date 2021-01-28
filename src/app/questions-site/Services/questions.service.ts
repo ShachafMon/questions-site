@@ -1,5 +1,5 @@
 import { Injectable, OnInit } from '@angular/core';
-import { Question } from '../../models/question.model';
+import { IQuestion } from '../../models/question.model';
 import { HttpService } from './http.service';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { Router } from '@angular/router';
@@ -9,8 +9,8 @@ import { AuthenticationService } from './authentication.service';
   providedIn: 'root'
 })
 export class QuestionsService implements OnInit {
-  questions: Question[] = [];
-  public questionsSubj = new BehaviorSubject<Question[]>(undefined);
+  questions: IQuestion[] = [];
+  public questionsSubj = new BehaviorSubject<IQuestion[]>(undefined);
     
     constructor(private http: HttpService, private router: Router, private authService: AuthenticationService) { this.GetQuestions(); }
   ngOnInit() {
@@ -30,12 +30,12 @@ export class QuestionsService implements OnInit {
       });
   }
 
-  UpdateQuestion(question: Question) {
+  UpdateQuestion(question: IQuestion) {
     this.http.UpdateQuestion(question).subscribe(
       data => {
         alert("Question was updated");
         var newQuest = data['newQuestion'];
-        var quest: Question = this.questions.find((ques) => ques.id == newQuest.id);
+        var quest: IQuestion = this.questions.find((ques) => ques.id == newQuest.id);
         this.questionsSubj.next(this.questions);
         if (quest) {
           quest.name = newQuest.name;
@@ -46,7 +46,7 @@ export class QuestionsService implements OnInit {
     )
   }
 
-  addQuestion(question: Question) {
+  addQuestion(question: IQuestion) {
     question.creationDate = new Date();
     this.http.CreateQuestion(question).subscribe(
       data => {
@@ -58,7 +58,7 @@ export class QuestionsService implements OnInit {
     )
   }
 
-  removeQuestion(question: Question) {
+  removeQuestion(question: IQuestion) {
     this.http.DeleteQuestion(question.id).subscribe(
       data => {
         alert(data['message']);

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { Question } from 'src/app/models/question.model';
-import { QuestionsService } from '../Services/questions.service';
+import { IQuestion } from 'src/app/models/question.model';
+import { QuestionsService } from '../../../Services/questions.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,37 +9,41 @@ import { QuestionsService } from '../Services/questions.service';
 export class NewEditService {
 
   constructor(private questionService: QuestionsService) { }
-  private currentQuestion: Question;
-  public currentQuestionSbj: Subject<Question> = new Subject<Question>();
+  private currentQuestion: IQuestion;
+  public currentQuestionSbj: Subject<IQuestion> = new Subject<IQuestion>();
   showEditAddComp = false;
   public showEditAddCompSbj: Subject<boolean> = new Subject<boolean>();
 
-  setCurrentQuestion(currentQuestion: Question) {
+  setCurrentQuestion(currentQuestion: IQuestion) {
     this.currentQuestion = currentQuestion;
     this.currentQuestionSbj.next(this.currentQuestion);
     if (currentQuestion)
       this.show();
   }
-  getCurrentQuestion(): Question {
+
+  getCurrentQuestion(): IQuestion {
     return this.currentQuestion;
   }
+
   show() {
     this.showEditAddComp = true;
     this.showEditAddCompSbj.next(this.showEditAddComp);
   }
+  
   checkIfSelectedCurrentQuestion(): boolean {
     return this.currentQuestion == null;
   }
 
-  UpdateQuestion(question: Question) {
+  UpdateQuestion(question: IQuestion) {
     this.questionService.UpdateQuestion(question);
     this.reset();
   }
 
-  addQuestion(question: Question) {
+  addQuestion(question: IQuestion) {
     this.questionService.addQuestion(question);
     this.reset();
   }
+
   reset() {
     this.setCurrentQuestion(undefined);
     this.showEditAddComp = false;

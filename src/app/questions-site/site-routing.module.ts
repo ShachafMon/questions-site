@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ChartsComponent } from './charts/charts.component';
 import { ManagerComponent } from './manager/manager.component';
-import { QuestionListComponent } from './question-list/question-list.component';
+import { QuestionListComponent } from './manager/question-list/question-list.component';
 
 
 const routes: Routes = [

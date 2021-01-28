@@ -1,7 +1,7 @@
-import { identifierModuleUrl } from '@angular/compiler';
-import { Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Dictionary } from '@amcharts/amcharts4/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
-import { Question } from 'src/app/models/question.model';
+import { IQuestion } from 'src/app/models/question.model';
 import { QuestionsService } from '../Services/questions.service';
 
 @Injectable({
@@ -9,10 +9,11 @@ import { QuestionsService } from '../Services/questions.service';
 })
 export class ChartsService implements OnDestroy {
     subs: Subscription[] = [];
-    chartdata : any[];
+    chartdata: any[];
     public chartdataSubj: BehaviorSubject<any[]>;
-    public hoursAdded: number[] = [];
-    questions: Question[];
+    hoursCounterDic: { [hour: number]: number } = {};
+
+    questions: IQuestion[];
     constructor(private questionService: QuestionsService) {
         console.log('new Charts Serive');
         this.chartdataSubj = new BehaviorSubject<any[]>(undefined);
@@ -61,8 +62,8 @@ export class ChartsService implements OnDestroy {
                 if (ques.creationDate && ques.description && ques.id && ques.name) {
                     let currentDate = new Date(ques.creationDate);
                     let hour = currentDate.getHours();
-                    if (!this.hoursAdded.includes(hour))
-                        this.hoursAdded.push(hour);
+                    let dicHour = this.hoursCounterDic[hour];
+                    dicHour ? this.hoursCounterDic[hour] = dicHour + 1 : this.hoursCounterDic[hour] = 1;
                     let day = currentDate.getDay()
                     this.chartdata[day][hour] ? this.chartdata[day][hour] += 1 : this.chartdata[day][hour] = 1;
                     this.chartdata[day].count += 1;

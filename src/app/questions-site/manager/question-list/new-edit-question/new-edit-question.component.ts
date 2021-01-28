@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { Question } from 'src/app/models/question.model';
+import { IQuestion } from 'src/app/models/question.model';
 import { NewEditService } from './new-edit.service';
 
 @Component({
@@ -13,13 +13,15 @@ export class NewComponent implements OnInit, OnDestroy {
 
   constructor(private formBuilder: FormBuilder, private newEditService: NewEditService) { }
   subs : Subscription[] = [];
-  question: Question;
+  question: IQuestion;
   newQuestionForm: FormGroup;
+
   ngOnInit(): void {
     this.question = this.newEditService.getCurrentQuestion();
     this.makeForm();
     this.subs.push(this.newEditService.currentQuestionSbj.subscribe(data => { this.question = data; this.makeForm(); }))
   }
+
   ngOnDestroy(){
     this.subs.forEach((item)=>item.unsubscribe());
   }
@@ -44,10 +46,12 @@ export class NewComponent implements OnInit, OnDestroy {
       this.newEditService.UpdateQuestion(this.newQuestionForm.value);
     }
   }
+
   exit()
   {
     this.newEditService.reset();
   }
+  
   get description() { return this.newQuestionForm.get('description') }
   get name() { return this.newQuestionForm.get('name') }
 }

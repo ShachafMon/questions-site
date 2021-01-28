@@ -1,8 +1,8 @@
 <ul>
     <div class="flex space-between">
         <div>
-            <li><a class="clickable" routerLink="questions">Question List</a></li>
-            <li><a class="clickable" routerLink="charts">Charts</a></li>
+            <li class="clickable"  (click)="navigate('questions')"><a>Question List</a></li>
+            <li class="clickable" (click)="navigate('charts')"><a>Charts</a></li>
         </div>
         <div>
             <li><a class="clickable" (click)="logout()">Logout</a></li>

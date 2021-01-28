@@ -1,3 +1,32 @@
-.half-page{
+.half-page {
     height: 50%;
+}
+
+
+.flex-column {
+    flex-direction: column;
+}
+
+.edit-container {
+    width  : 100%;
+    display: -webkit-box;
+}
+
+.flex {
+    display: flex;
+}
+.flex-start{
+    justify-content: flex-start;
+}
+.tooltip {
+    display: block;
+    border: black;
+    border-radius: 2px;
+    height          : 1vw;
+    width           : 2vw;
+    background-color: lightgray;
+    flex-direction: column;
+}
+.space-setween{
+    justify-content: space-between;
 }

@@ -14,6 +14,7 @@ export class AuthenticationService implements OnInit {
     ngOnInit() {
 
     }
+
     login(loginForm: FormGroup): Promise<void> {
         return new Promise((res, rej) => {
             this.http.Login(loginForm.value).subscribe(
@@ -32,12 +33,15 @@ export class AuthenticationService implements OnInit {
     setToken(token: string) {
         this.cookieService.set('authToken', token);
     }
+
     checkToken(): boolean {
         return this.cookieService.check('authToken');
     }
+
     getToken(): string {
         return this.cookieService.get('authToken');
     }
+    
     removeCookie() {
         this.cookieService.delete('authToken');
     }

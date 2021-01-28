@@ -16,19 +16,20 @@ export class LoginComponent implements OnInit {
   wrongLogin: boolean;
   loginForm: FormGroup;
   rememberme: boolean;
+
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.pattern(this.passRegex), Validators.minLength(6), Validators.maxLength(20)]]
     });
-
   }
 
-  async submitLogin() {
+  submitLogin() {
     if (this.loginForm.valid) {
-      this.authService.login(this.loginForm).then(() => this.router.navigate(['/manager'])).catch(()=>this.wrongLogin = true);
+      this.authService.login(this.loginForm).then(() => this.router.navigate(['/manager'])).catch(() => this.wrongLogin = true);
     }
   }
+
   get username() { return this.loginForm.get('username') }
   get password() { return this.loginForm.get('password') }
 }

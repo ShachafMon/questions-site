@@ -1,4 +1,4 @@
-export class Question {
+export interface IQuestion {
     name: string;
     creationDate : Date;
     description : string;

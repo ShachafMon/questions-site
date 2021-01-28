@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { Question } from 'src/app/models/question.model';
-import { NewEditService } from '../new-edit-question/new-edit.service';
-import { AuthenticationService } from '../Services/authentication.service';
-import { QuestionsService } from '../Services/questions.service';
+import { IQuestion } from 'src/app/models/question.model';
+import { NewEditService } from './new-edit-question/new-edit.service';
+import { AuthenticationService } from '../../Services/authentication.service';
+import { QuestionsService } from '../../Services/questions.service';
 
 @Component({
   selector: 'app-question-list',
@@ -14,13 +14,15 @@ import { QuestionsService } from '../Services/questions.service';
 export class QuestionListComponent implements OnInit, OnDestroy {
 
   subsuribes: Subscription[] = [];
-  constructor(private questionService: QuestionsService, private newEditService: NewEditService, private router: Router, private authService: AuthenticationService) {
-  }
   showNewEditComp: boolean;
-  questions: Question[];
+  questions: IQuestion[];
   deletePopup: boolean;
   infoPopup: boolean;
-  currentQuestion: Question;
+  currentQuestion: IQuestion;
+
+  constructor(private questionService: QuestionsService, private newEditService: NewEditService, private router: Router, private authService: AuthenticationService) {
+  }
+
   ngOnInit(): void {
     if (!this.authService.checkToken()) {
       alert(`Access token didn't found!`);
@@ -41,12 +43,13 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subsuribes.forEach((sub) => { sub.unsubscribe(); })
   }
-  onEditQuestion(question: Question) {
+
+  onEditQuestion(question: IQuestion) {
     this.newEditService.setCurrentQuestion(question);
     this.showNewEditComp = true;
   }
 
-  onRemoveQuestion(question: Question) {
+  onRemoveQuestion(question: IQuestion) {
     this.currentQuestion = question;
     this.deletePopup = true;
   }
@@ -56,13 +59,14 @@ export class QuestionListComponent implements OnInit, OnDestroy {
     this.newEditService.reset();
     this.exitPopup();
   }
+
   exitPopup() {
     this.currentQuestion = null;
     this.deletePopup = false;
     this.infoPopup = false;
   }
 
-  showInfo(question: Question) {
+  showInfo(question: IQuestion) {
     this.currentQuestion = question;
     this.infoPopup = true;
   }
