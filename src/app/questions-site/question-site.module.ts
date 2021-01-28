@@ -14,11 +14,12 @@ import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { XyChartComponent } from './charts/xy-chart/xy-chart.component';
 import { QuestionsService } from './Services/questions.service';
 import { NzDatePickerModule } from 'ng-zorro-antd';
+import { IdHtmlTransform } from '../shared/pipes/id-html.pipe';
 
 
 
 @NgModule({
-  declarations: [LoginComponent, ManagerComponent, NewComponent, ChartsComponent, NavbarComponent, QuestionListComponent, PieChartComponent, XyChartComponent],
+  declarations: [LoginComponent, ManagerComponent, NewComponent, ChartsComponent, NavbarComponent, QuestionListComponent, PieChartComponent, XyChartComponent, IdHtmlTransform],
   imports: [
     CommonModule,
     FormsModule,
@@ -27,6 +28,7 @@ import { NzDatePickerModule } from 'ng-zorro-antd';
     RouterModule,
     SiteRoutingModule,
     NzDatePickerModule
+    
   ],
   providers:[QuestionsService],
   exports: [ManagerComponent, LoginComponent, NavbarComponent]

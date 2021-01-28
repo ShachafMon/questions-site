@@ -1,10 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { IQuestion } from 'src/app/shared/models/question.model';
 import { NewEditService } from './new-edit-question/new-edit.service';
 import { AuthenticationService } from '../../Services/authentication.service';
 import { QuestionsService } from '../../Services/questions.service';
+import { IQuestion } from 'src/app/shared/models/question.model';
 
 @Component({
   selector: 'app-question-list',

@@ -23,7 +23,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let question of questions">
-                    <td (click)="showInfo(question)">{{question.id}}</td>
+                    <td (click)="showInfo(question)" [innerHTML]="question.id | idhtmlpipe"></td>
                     <td (click)="showInfo(question)">{{question.name}}</td>
                     <td (click)="showInfo(question)">{{question.creationDate | date:'shortDate'}}</td>
                     <td>

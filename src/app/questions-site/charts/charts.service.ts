@@ -14,7 +14,6 @@ export class ChartsService implements OnDestroy {
 
     questions: IQuestion[];
     constructor(private questionService: QuestionsService) {
-        console.log('new Charts Serive');
         this.chartdataSubj = new BehaviorSubject<any[]>(undefined);
         this.subs.push(this.questionService.questionsSubj.subscribe(data => {
             if (data) {
