@@ -27,6 +27,8 @@ export class XyChartComponent implements OnInit, OnDestroy {
       if (data) {
         this.chartData = data;
         this.hoursCounterDic = this.chartService.hoursCounterDic;
+        if (this.chart)
+          this.chart.dispose();
         this.makeChart(data);
         this.getFivePopular();
       }

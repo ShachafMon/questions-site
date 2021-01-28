@@ -19,17 +19,30 @@ export class ChartsService implements OnDestroy {
             if (data) {
                 this.resetChartData();
                 this.questions = data;
-                this.logicInfo();
-                this.chartdataSubj.next(this.chartdata);
+                this.logicInfo(this.questions);
             }
         }));
     }
+
+    getByDateRange(dateRange: Date[]) {
+        if (dateRange[0] && dateRange[1]) {
+            this.resetChartData();
+            this.logicInfo(this.questions.filter(a => new Date(a.creationDate) > dateRange[0] && new Date(a.creationDate) < dateRange[1]));
+        }
+        else{
+            this.resetChartData();
+            this.logicInfo(this.questions)
+        }
+    }
+
 
     ngOnDestroy() {
         this.subs.forEach((item) => item.unsubscribe());
     }
 
+
     resetChartData() {
+        this.hoursCounterDic = {};
         this.chartdata = [{
             "day": "Sunday",
             "count": 0
@@ -54,8 +67,8 @@ export class ChartsService implements OnDestroy {
         }];
     }
 
-    logicInfo() {
-        this.questions.forEach(
+    logicInfo(questions: IQuestion[]) {
+        questions.forEach(
             ques => {
                 if (ques.creationDate && ques.description && ques.id && ques.name) {
                     let currentDate = new Date(ques.creationDate);
@@ -68,5 +81,6 @@ export class ChartsService implements OnDestroy {
                 }
             }
         )
+        this.chartdataSubj.next(this.chartdata);
     }
 }

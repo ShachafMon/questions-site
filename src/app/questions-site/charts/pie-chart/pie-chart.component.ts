@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import * as am4core from "@amcharts/amcharts4/core" ;
+import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { ChartsService } from '../charts.service';
@@ -22,6 +22,8 @@ export class PieChartComponent implements OnInit, OnDestroy {
     this.subs.push(this.chartService.chartdataSubj.subscribe(data => {
       if (data) {
         am4core.useTheme(am4themes_animated);
+        if (this.chart)
+          this.chart.dispose();
         this.chart = am4core.create("pie-chart-div", am4charts.PieChart);
         this.chart.data = data;
         this.createAllSeries();
@@ -34,7 +36,7 @@ export class PieChartComponent implements OnInit, OnDestroy {
     this.chart?.dispose();
     this.subs.forEach((item) => item.unsubscribe());
   }
-  
+
   createAllSeries() {
     let pieSeries = this.chart.series.push(new am4charts.PieSeries());
     pieSeries.dataFields.value = "count";

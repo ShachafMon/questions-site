@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ChartsService } from './charts.service';
 
 @Component({
   selector: 'app-charts',
@@ -9,13 +10,17 @@ export class ChartsComponent implements OnInit {
 
   chartsData: any[];
   hoursAdded: number[];
-  selectedDate : Date;
-  constructor() {
-   
+  selectedDate: Date[];
+  constructor(private chartsService: ChartsService) {
+
   }
 
   ngOnInit(): void {
-   
+
+  }
+  dateSelected() {
+    this.chartsService.getByDateRange(this.selectedDate);
+
   }
 
 
