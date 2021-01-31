@@ -27,7 +27,7 @@ registerLocaleData(he);
     HttpClientModule,
     BrowserAnimationsModule,
     RouterModule,
-    FormsModule
+    FormsModule,
   ],
   providers: [CookieService, { provide: NZ_I18N, useValue: he_IL }],
   bootstrap: [AppComponent]

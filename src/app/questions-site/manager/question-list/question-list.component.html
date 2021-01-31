@@ -27,14 +27,14 @@
                     <td (click)="showInfo(question)">{{question.name}}</td>
                     <td (click)="showInfo(question)">{{question.creationDate | date:'shortDate'}}</td>
                     <td>
-                        <button (click)="onEditQuestion(question)">Edit</button>
-                        <button (click)="onRemoveQuestion(question)">Remove</button>
+                        <i nz-icon nzType="edit" nzTheme="outline" (click)="onEditQuestion(question)"></i>
+                        <i nz-icon nzType="delete" nzTheme="outline" (click)="onRemoveQuestion(question)"></i>
                     </td>
                 </tr>
             </tbody>
         </table>
         <div class="window-width flex flex-end padding">
-                <button (click)="OnCreateNewQuestion()">Add Question</button>
+            <button (click)="OnCreateNewQuestion()">Add Question</button>
         </div>
     </div>
     <app-new *ngIf="showNewEditComp"></app-new>

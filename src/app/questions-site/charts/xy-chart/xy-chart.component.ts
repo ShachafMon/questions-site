@@ -111,14 +111,14 @@ export class XyChartComponent implements OnInit, OnDestroy {
     // Configure columns
     series.columns.template.width = am4core.percent(60);
     //series.columns.template.tooltipText = "[bold]{name}[/]\n[font-size:14px]{categoryX}: {valueY}";
-    series.columns.template.tooltipHTML = new am4core.Tooltip().tooltipHTML = `
-    <div style="display:flex; flex-direction:column; font-size:15px">
+    series.columns.template.tooltipHTML = `
+    <div style="display:flex; flex-direction:column; width:150px; font-size:15px">
       <div style="align-self:center;">
         {categoryX}
       </div>
       <div style="display:flex; justify-content:space-between;">
         <div>
-          test
+          {name}
         </div>
         <div>
         {valueY} Questions

@@ -13,9 +13,8 @@ import { QuestionListComponent } from './manager/question-list/question-list.com
 import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { XyChartComponent } from './charts/xy-chart/xy-chart.component';
 import { QuestionsService } from './Services/questions.service';
-import { NzDatePickerModule } from 'ng-zorro-antd';
+import { NzDatePickerModule, NzIconModule } from 'ng-zorro-antd';
 import { IdHtmlTransform } from '../shared/pipes/id-html.pipe';
-
 
 
 @NgModule({
@@ -27,9 +26,10 @@ import { IdHtmlTransform } from '../shared/pipes/id-html.pipe';
     MatDialogModule,
     RouterModule,
     SiteRoutingModule,
-    NzDatePickerModule    
+    NzDatePickerModule,
+    NzIconModule
   ],
-  providers:[QuestionsService],
+  providers: [QuestionsService],
   exports: [ManagerComponent, LoginComponent, NavbarComponent]
 })
 export class QuestionSiteModule { }
