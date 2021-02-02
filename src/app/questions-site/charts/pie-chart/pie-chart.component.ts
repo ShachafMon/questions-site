@@ -24,6 +24,7 @@ export class PieChartComponent implements OnInit, OnDestroy {
         am4core.useTheme(am4themes_animated);
         if (this.chart)
           this.chart.dispose();
+        data = data.filter(item => item.count > 0);
         this.chart = am4core.create("pie-chart-div", am4charts.PieChart);
         this.chart.data = data;
         this.createAllSeries();
