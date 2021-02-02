@@ -20,7 +20,7 @@ export class XyChartComponent implements OnInit, OnDestroy {
   chartData: any[];
   showPopular: boolean = false;;
   hoursCounterDic: { [hour: number]: number };
-  popularHours: { [hour: string]: number } = { 'others': 0 };
+  popularHours: { [hour: string]: number } = {};
 
   ngOnInit(): void {
     this.subs.push(this.chartService.chartdataSubj.subscribe(data => {
@@ -36,6 +36,8 @@ export class XyChartComponent implements OnInit, OnDestroy {
   };
 
   makeChart(data) {
+    if (this.chart)
+      this.chart.dispose();
     am4core.useTheme(am4themes_animated);
     this.chart = am4core.create("xy-chart-div", am4charts.XYChart);
     this.chart.data = data;
@@ -47,9 +49,10 @@ export class XyChartComponent implements OnInit, OnDestroy {
     this.chart.legend = new am4charts.Legend();
   }
 
+  //Define hoursCounterDic as sorter key,value[], slice top 5, return [] into a dictionary, check if "hour" is a real hour and add value to "others" hour
   getFivePopular() {
-    this.popularHours = { 'others': 0 };
-    let tempArr = Object.entries(this.hoursCounterDic).sort((a, b) => b[1] - a[1]).splice(0, 5);
+    Object.entries(this.hoursCounterDic).length > 5 ? this.popularHours = { 'others': 0 } : this.popularHours = {};
+    let tempArr = Object.entries(this.hoursCounterDic).sort((a, b) => b[1] - a[1]).slice(0, 5);
     tempArr.forEach(element => {
       this.popularHours[element[0]] = element[1];
     });
@@ -60,7 +63,6 @@ export class XyChartComponent implements OnInit, OnDestroy {
         }
       });
     })
-    console.log(this.chartData);
   }
 
   onPopularChanged() {
@@ -91,7 +93,6 @@ export class XyChartComponent implements OnInit, OnDestroy {
       this.createSeries(key, key);
     }
   }
-
 
   createSeries(field, name) {
     // Set up series
