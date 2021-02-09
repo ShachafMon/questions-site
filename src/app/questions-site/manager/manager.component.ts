@@ -1,7 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthenticationService } from '../Services/authentication.service';
-
 
 
 @Component({
@@ -11,11 +8,9 @@ import { AuthenticationService } from '../Services/authentication.service';
 })
 export class ManagerComponent implements OnInit {
 
-  constructor(private router: Router, private authService: AuthenticationService) { }
-  
+  constructor() { }
+
   ngOnInit() {
-    if (!this.authService.checkToken()) {
-      this.router.navigate(['/']);
-    }
+ 
   }
 }
