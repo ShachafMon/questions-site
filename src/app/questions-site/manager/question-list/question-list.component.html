@@ -39,26 +39,9 @@
     </div>
     <app-new *ngIf="showNewEditComp"></app-new>
 </div>
-<div class="popup" *ngIf="deletePopup">
-    <div class="popup-content padding window-width">
-        <div class="flex flex-center flex-column">
-            <div class="flex center window-width padding">Are you sure you want to remove
-                {{currentQuestion.name}}?</div>
-            <div class="flex center window-width">{{currentQuestion.description}}</div>
-            <div class="flex space-around window-width padding">
-                <button class="accept" (click)="removeQuestion()">Yes</button>
-                <button class="decline" (click)="exitPopup()">No</button>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="popup" *ngIf="infoPopup">
-    <div class="popup-content padding window-width">
-        <div class="flex flex-center flex-column">
-            <div class="flex center window-width padding">{{currentQuestion.name}}</div>
-            <div class="flex center window-width">{{currentQuestion.description}}</div>
-            <button class="button" (click)="exitPopup()">Ok</button>
-        </div>
-    </div>
-</div>
+<app-popup *ngIf="deletePopup" class="popup" [btn1]="'No'" [btn2]="'Yes'" [header]='removeQuesMsg()' [msg]="currentQuestion.description"
+    (onBtn1Clicked)="exitPopup()" (onBtn2Clicked)="removeQuestion()" ></app-popup>
+
+<app-popup class="popup" (onBtn1Clicked)="exitPopup()" [btn1]="'Ok'" *ngIf="infoPopup"
+    [msg]="currentQuestion.description" [header]="currentQuestion.name"></app-popup>

@@ -15,10 +15,11 @@ import { XyChartComponent } from './charts/xy-chart/xy-chart.component';
 import { QuestionsService } from './Services/questions.service';
 import { NzDatePickerModule, NzIconModule } from 'ng-zorro-antd';
 import { IdHtmlTransform } from '../shared/pipes/id-html.pipe';
+import { PopupComponent } from './popup/popup.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, ManagerComponent, NewComponent, ChartsComponent, NavbarComponent, QuestionListComponent, PieChartComponent, XyChartComponent, IdHtmlTransform],
+  declarations: [LoginComponent, ManagerComponent, NewComponent, ChartsComponent, NavbarComponent, QuestionListComponent, PieChartComponent, XyChartComponent, IdHtmlTransform, PopupComponent],
   imports: [
     CommonModule,
     FormsModule,

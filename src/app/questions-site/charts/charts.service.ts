@@ -10,11 +10,13 @@ export class ChartsService implements OnDestroy {
     subs: Subscription[] = [];
     chartdata: any[];
     public chartdataSubj: BehaviorSubject<any[]>;
+    public emptyArraySubj: BehaviorSubject<boolean>;
     hoursCounterDic: { [hour: number]: number } = {};
 
     questions: IQuestion[];
     constructor(private questionService: QuestionsService) {
         this.chartdataSubj = new BehaviorSubject<any[]>(undefined);
+        this.emptyArraySubj = new BehaviorSubject<boolean>(false);
         this.subs.push(this.questionService.questionsSubj.subscribe(data => {
             if (data) {
                 this.resetChartData();
@@ -27,19 +29,22 @@ export class ChartsService implements OnDestroy {
     getByDateRange(dateRange: Date[]) {
         if (dateRange[0] && dateRange[1]) {
             this.resetChartData();
-            this.logicInfo(this.questions.filter(a => new Date(a.creationDate) > dateRange[0] && new Date(a.creationDate) < dateRange[1]));
+            let tempArr = this.questions.filter(a => new Date(a.creationDate) > dateRange[0] && new Date(a.creationDate) < dateRange[1]);
+            if (tempArr.length == 0)
+                this.emptyArraySubj.next(true);
+            else
+                this.logicInfo(tempArr);
         }
-        else{
+        else {
+            this.emptyArraySubj.next(false);
             this.resetChartData();
             this.logicInfo(this.questions)
         }
     }
 
-
     ngOnDestroy() {
         this.subs.forEach((item) => item.unsubscribe());
     }
-
 
     resetChartData() {
         this.hoursCounterDic = {};

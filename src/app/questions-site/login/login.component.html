@@ -1,8 +1,8 @@
-<div class="get-flex get-flex-center get-streach get-flex-column">
+<div class="flex flex-center streach flex-column">
     <h2>Welcome to my nonsense question site!</h2>
     <h3 class="alert" *ngIf="wrongLogin">Username and password doesn't match</h3>
-    <div class="login-container get-flex-column">
-        <form class="get-flex get-flex-column" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+    <div class="login-container flex-column">
+        <form class="flex flex-column" [formGroup]="loginForm" (ngSubmit)="submitLogin()">
             <div>
                 <div>
                     <div>Username</div>
@@ -16,7 +16,7 @@
                     <div>Password</div>
                     <input type="password" class="text-input" formControlName="password">
                 </div>
-                <div class="get-flex get-flex-column">
+                <div class="flex flex-column">
                     <small class="alert" *ngIf="password.touched && !password.valid && password.errors.required">
                         * Password can't be empty!
                     </small>
@@ -28,12 +28,12 @@
                         * Password must at least one Uppercase and one number
                     </small>
                 </div>
-                <div class="get-5padding"><input type="checkbox" [(value)]="rememberme">Remember me!</div>
+                <div class="5padding"><input type="checkbox" [(value)]="rememberme">Remember me!</div>
             </div>
 
             <button type="submit" [disabled]="!loginForm.valid">Login</button>
         </form>
     </div>
-    <div class='get-flex get-flex-column'>
+    <div class='flex flex-column'>
     </div>
 </div>

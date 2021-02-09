@@ -1,13 +1,5 @@
-.get-flex {
-    display: flex;
-}
-.get-streach{
-    width: 100%;
-    height: 100%;
-}
-.flex-wrap{
-    flex-wrap: wrap;
-}
+
+
 .get-5padding{
     padding: 5px;
 }
@@ -16,10 +8,6 @@ button{
     width: 50%;
 }
 
-.get-flex-center {
-    justify-content: center;
-    align-items  : center;
-}
 
 .login-container {
     display: flex;
@@ -37,11 +25,8 @@ form>div {
     padding        : 5px;
 }
 
-.flex-row {
-    flex-direction: row;
-}
 
-.get-flex-column {
+.flex-column {
     flex-direction: column;
 }
 .alert{

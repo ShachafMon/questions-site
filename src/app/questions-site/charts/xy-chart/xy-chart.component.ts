@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
-import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { ChartsService } from '../charts.service';
 import { Subscription } from 'rxjs';
 
@@ -38,7 +37,6 @@ export class XyChartComponent implements OnInit, OnDestroy {
   makeChart(data) {
     if (this.chart)
       this.chart.dispose();
-    am4core.useTheme(am4themes_animated);
     this.chart = am4core.create("xy-chart-div", am4charts.XYChart);
     this.chart.data = data;
     this.createAxes();
@@ -56,10 +54,10 @@ export class XyChartComponent implements OnInit, OnDestroy {
     tempArr.forEach(element => {
       this.popularHours[element[0]] = element[1];
     });
-    this.chartData.forEach(item => {
-      Object.entries(item).forEach(inner => {
+    this.chartData.forEach(chartDataItem => {
+      Object.entries(chartDataItem).forEach(inner => {
         if (!isNaN(parseInt(inner[0])) && !this.popularHours[inner[0]]) {
-          item['others'] ? item['others'] += parseInt(`${inner[1]}`) : item['others'] = parseInt(`${inner[1]}`)
+          chartDataItem['others'] ? chartDataItem['others'] += parseInt(`${inner[1]}`) : chartDataItem['others'] = parseInt(`${inner[1]}`)
         }
       });
     })
@@ -113,11 +111,11 @@ export class XyChartComponent implements OnInit, OnDestroy {
     series.columns.template.width = am4core.percent(60);
     //series.columns.template.tooltipText = "[bold]{name}[/]\n[font-size:14px]{categoryX}: {valueY}";
     series.columns.template.tooltipHTML = `
-    <div id="tooltip-item" style="display:flex; flex-direction:column; width:150px; font-size:15px;">
-      <div style="align-self:center;">
+    <div id="tooltip-item">
+      <div class="center">
         {categoryX}
       </div>
-      <div style="display:flex; justify-content:space-between;">
+      <div class="flex space-between">
         <div>
           {name}
         </div>
@@ -127,6 +125,8 @@ export class XyChartComponent implements OnInit, OnDestroy {
       </div>
     </div>
     `
+    series.tooltip.getFillFromObject = false;
+    series.tooltip.background.fill = am4core.color('#ffffff');
 
     // Add label
     let labelBullet = series.bullets.push(new am4charts.LabelBullet());

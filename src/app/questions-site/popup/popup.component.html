@@ -1,0 +1,10 @@
+<div class="popup-content padding window-width">
+    <div class="flex flex-center flex-column">
+        <div class="flex center window-width padding">{{header}}</div>
+        <div class="flex center window-width">{{msg}}</div>
+        <div class="flex space-around window-width padding">
+            <button *ngIf="btn1" class="button" (click)="btn1Clicked()">{{btn1}}</button>
+            <button *ngIf='btn2' class="button" (click)="btn2Clicked()">{{btn2}}</button>
+        </div>
+    </div>
+</div>

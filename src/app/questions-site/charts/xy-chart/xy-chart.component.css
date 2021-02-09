@@ -12,12 +12,7 @@
     display: -webkit-box;
 }
 
-.flex {
-    display: flex;
-}
-.flex-start{
-    justify-content: flex-start;
-}
+
 .tooltip {
     display: block;
     border: black;
@@ -26,7 +21,4 @@
     width           : 2vw;
     background-color: lightgray;
     flex-direction: column;
-}
-.space-setween{
-    justify-content: space-between;
 }

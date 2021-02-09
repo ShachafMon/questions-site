@@ -19,15 +19,13 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   deletePopup: boolean;
   infoPopup: boolean;
   currentQuestion: IQuestion;
+  removeQuesMsg = () => `Are you sure you want to remove ${this.currentQuestion.name}`;
 
-  constructor(private questionService: QuestionsService, private newEditService: NewEditService, private router: Router, private authService: AuthenticationService) {
+  constructor(private questionService: QuestionsService, private newEditService: NewEditService) {
   }
 
   ngOnInit(): void {
-    if (!this.authService.checkToken()) {
-      alert(`Access token didn't found!`);
-      this.router.navigate(['/']);
-    }
+  
     this.subsuribes.push(this.questionService.questionsSubj.subscribe(data => {
       if (data)
         this.questions = data;

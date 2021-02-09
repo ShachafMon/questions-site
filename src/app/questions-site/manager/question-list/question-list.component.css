@@ -1,7 +1,4 @@
-.flex {
-    display: flex;
-    width  : 100%;
-}
+
 
 .padding {
     padding: 1vw;
@@ -10,7 +7,26 @@
 .main-container {
     height: 100%;
 }
-
+.popup {
+    position        : fixed;
+    z-index         : 1;
+    padding-top     : 100px;
+    left            : 0;
+    top             : 0;
+    width           : 100%;
+    height          : 100%;
+    overflow        : auto;
+    background-color: rgb(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.4);
+}
+.popup-content {
+    background-color: #fefefe;
+    margin          : auto;
+    padding         : 20px;
+    border          : 2px solid #888;
+    width           : 50%;
+    border-radius   : 10px;
+}
 .flex-center {
     align-items: center;
 }
@@ -19,10 +35,6 @@
     font-family    : Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width          : 70%;
-}
-
-.flex-column {
-    flex-direction: column;
 }
 
 .window-width {
@@ -35,17 +47,6 @@
     padding: 5px;
 }
 
-.space-between {
-    justify-content: space-between;
-}
-
-.space-around {
-    justify-content: space-around;
-}
-
-.flex-end {
-    justify-content: flex-end;
-}
 
 #questionsTable tr:hover {
     background-color: #ddd;
@@ -59,27 +60,6 @@
     color           : black;
 }
 
-.popup {
-    position        : fixed;
-    z-index         : 1;
-    padding-top     : 100px;
-    left            : 0;
-    top             : 0;
-    width           : 100%;
-    height          : 100%;
-    overflow        : auto;
-    background-color: rgb(0, 0, 0);
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-.popup-content {
-    background-color: #fefefe;
-    margin          : auto;
-    padding         : 20px;
-    border          : 2px solid #888;
-    width           : 50%;
-    border-radius   : 10px;
-}
 
 .center {
     justify-content: center;
@@ -106,10 +86,6 @@ td {
 #functionsth {
     width : 10%;
     height: 100%;
-}
-
-.flex-end {
-    justify-items: flex-start;
 }
 
 i {

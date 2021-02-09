@@ -1,3 +1,4 @@
 <nz-range-picker [(ngModel)]="selectedDate" (ngModelChange)="dateSelected()" ></nz-range-picker>
-<app-xy-chart class="chart"></app-xy-chart>
-<app-pie-chart class="chart"></app-pie-chart>
+<app-popup class='popup' *ngIf="emptyError" [header]="'No questions found'" [btn1]="'Ok'" (onBtn1Clicked)="resetCharts()" ></app-popup>
+<app-xy-chart *ngIf="!emptyError" class="chart"></app-xy-chart>
+<app-pie-chart *ngIf="!emptyError" class="chart"></app-pie-chart>

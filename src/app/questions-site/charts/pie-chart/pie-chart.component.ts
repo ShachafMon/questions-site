@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as am4core from "@amcharts/amcharts4/core";
 import * as am4charts from "@amcharts/amcharts4/charts";
-import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { ChartsService } from '../charts.service';
 import { Subscription } from 'rxjs';
 
@@ -21,7 +20,6 @@ export class PieChartComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subs.push(this.chartService.chartdataSubj.subscribe(data => {
       if (data) {
-        am4core.useTheme(am4themes_animated);
         if (this.chart)
           this.chart.dispose();
         data = data.filter(item => item.count > 0);

@@ -13,12 +13,14 @@ import { NZ_I18N } from 'ng-zorro-antd/i18n';
 import { he_IL } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import he from '@angular/common/locales/he';
+import { NumDayPipe } from './shared/pipes/num-day.pipe';
 
 registerLocaleData(he);
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    NumDayPipe
   ],
   imports: [
     BrowserModule,
