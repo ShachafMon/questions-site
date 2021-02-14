@@ -40,8 +40,8 @@
     <app-new *ngIf="showNewEditComp"></app-new>
 </div>
 
-<app-popup *ngIf="deletePopup" class="popup" [btn1]="'No'" [btn2]="'Yes'" [header]='removeQuesMsg()' [msg]="currentQuestion.description"
+<app-popup *ngIf="deletePopup" class="popup" [btn1content]="'No'" [btn2content]="'Yes'" [header]='removeQuesMsg()' [msg]="currentQuestion.description"
     (onBtn1Clicked)="exitPopup()" (onBtn2Clicked)="removeQuestion()" ></app-popup>
 
-<app-popup class="popup" (onBtn1Clicked)="exitPopup()" [btn1]="'Ok'" *ngIf="infoPopup"
+<app-popup class="popup" (onBtn1Clicked)="exitPopup()" [btn1content]="'Ok'" *ngIf="infoPopup"
     [msg]="currentQuestion.description" [header]="currentQuestion.name"></app-popup>

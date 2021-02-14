@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { IQuestion } from 'src/app/shared/models/question.model';
+import { ITreeNode } from 'src/app/shared/models/treenode.model';
 import { QuestionsService } from '../Services/questions.service';
 
 @Injectable({
@@ -10,12 +11,18 @@ export class ChartsService implements OnDestroy {
     subs: Subscription[] = [];
     chartdata: any[];
     public chartdataSubj: BehaviorSubject<any[]>;
+    public monthQuestionTreeDataSubj: BehaviorSubject<ITreeNode[]>;
     public emptyArraySubj: BehaviorSubject<boolean>;
     hoursCounterDic: { [hour: number]: number } = {};
+
+
+
+    treeData: ITreeNode[] = [];
 
     questions: IQuestion[];
     constructor(private questionService: QuestionsService) {
         this.chartdataSubj = new BehaviorSubject<any[]>(undefined);
+        this.monthQuestionTreeDataSubj = new BehaviorSubject<ITreeNode[]>(undefined);
         this.emptyArraySubj = new BehaviorSubject<boolean>(false);
         this.subs.push(this.questionService.questionsSubj.subscribe(data => {
             if (data) {
@@ -77,6 +84,16 @@ export class ChartsService implements OnDestroy {
             ques => {
                 if (ques.creationDate && ques.description && ques.id && ques.name) {
                     let currentDate = new Date(ques.creationDate);
+
+                    let month = currentDate.toLocaleString('en-US', { month: 'long' });
+                    let data = this.treeData.find(item => item.name == month);
+                    if (data) {
+                        data.childrens.push({ name: ques.name, checked: false, childrens: [] });
+                    }
+                    else {
+                        this.treeData.push({ name: month, checked: false, childrens: [{ name: ques.name, childrens: [], checked: false }] });
+                    }
+                    
                     let hour = currentDate.getHours();
                     let dicHour = this.hoursCounterDic[hour];
                     dicHour ? this.hoursCounterDic[hour] = dicHour + 1 : this.hoursCounterDic[hour] = 1;
@@ -87,5 +104,6 @@ export class ChartsService implements OnDestroy {
             }
         )
         this.chartdataSubj.next(this.chartdata);
+        this.monthQuestionTreeDataSubj.next(this.treeData);
     }
 }

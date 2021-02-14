@@ -16,10 +16,12 @@ import { QuestionsService } from './Services/questions.service';
 import { NzDatePickerModule, NzIconModule } from 'ng-zorro-antd';
 import { IdHtmlTransform } from '../shared/pipes/id-html.pipe';
 import { PopupComponent } from './popup/popup.component';
+import { TreeComponent } from './charts/tree/tree.component';
+import { NodeComponent } from './charts/tree/node/node.component';
 
 
 @NgModule({
-  declarations: [LoginComponent, ManagerComponent, NewComponent, ChartsComponent, NavbarComponent, QuestionListComponent, PieChartComponent, XyChartComponent, IdHtmlTransform, PopupComponent],
+  declarations: [LoginComponent, ManagerComponent, NewComponent, ChartsComponent, NavbarComponent, QuestionListComponent, PieChartComponent, XyChartComponent, IdHtmlTransform, PopupComponent, TreeComponent, NodeComponent],
   imports: [
     CommonModule,
     FormsModule,

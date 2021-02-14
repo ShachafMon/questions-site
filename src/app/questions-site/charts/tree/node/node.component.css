@@ -1,0 +1,16 @@
+.container {
+    width: fit-content;
+}
+
+.inner-container {
+    width       : fit-content;
+    padding-left: 25px;
+}
+
+.flex-end {
+    justify-content: flex-end;
+}
+
+.clickable {
+    cursor: pointer;
+}

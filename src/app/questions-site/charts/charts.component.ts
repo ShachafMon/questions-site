@@ -3,6 +3,7 @@ import { Subscription } from 'rxjs';
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import { ChartsService } from './charts.service';
 import * as am4core from "@amcharts/amcharts4/core";
+import { ITreeNode } from 'src/app/shared/models/treenode.model';
 
 @Component({
   selector: 'app-charts',
@@ -16,12 +17,16 @@ export class ChartsComponent implements OnInit, OnDestroy {
   selectedDate: Date[];
   emptyError: boolean;
   subs: Subscription[] = [];
+
+  monthQuestionTree: ITreeNode[];
+
   constructor(private chartsService: ChartsService) {
 
   }
 
   ngOnInit(): void {
     this.subs.push(this.chartsService.emptyArraySubj.subscribe(res => this.emptyError = res));
+    this.subs.push(this.chartsService.monthQuestionTreeDataSubj.subscribe(res => this.monthQuestionTree = res));
     am4core.useTheme(am4themes_animated);
 
   }

@@ -11,11 +11,12 @@ import { HttpService } from '../Services/http.service';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private formBuilder: FormBuilder, private http: HttpService, private router: Router, private authService: AuthenticationService) { }
   passRegex = new RegExp("(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])");
   wrongLogin: boolean;
   loginForm: FormGroup;
   rememberme: boolean;
+  
+  constructor(private formBuilder: FormBuilder, private http: HttpService, private router: Router, private authService: AuthenticationService) { }
 
   ngOnInit(): void {
     this.loginForm = this.formBuilder.group({

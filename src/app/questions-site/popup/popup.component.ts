@@ -10,8 +10,8 @@ export class PopupComponent implements OnInit {
   constructor() { }
   @Input() header: string;
   @Input() msg: string;
-  @Input() btn1: string;
-  @Input() btn2: string;
+  @Input() btn1content: string;
+  @Input() btn2content: string;
   @Output() onExitPopup: EventEmitter<undefined> = new EventEmitter<undefined>()
   @Output() onBtn1Clicked: EventEmitter<undefined> = new EventEmitter<undefined>()
   @Output() onBtn2Clicked: EventEmitter<undefined> = new EventEmitter<undefined>()
