@@ -1,12 +1,12 @@
 <nz-range-picker [(ngModel)]="selectedDate" (ngModelChange)="dateSelected()"></nz-range-picker>
 <div class="flex streach">
+    <div class="tree-container">
+        <app-tree [treeData]="monthQuestionTree"></app-tree>
+    </div>
     <div class="charts-container">
         <app-popup class='popup' *ngIf="emptyError" [header]="'No questions found'" [btn1content]="'Ok'"
             (onBtn1Clicked)="resetCharts()"></app-popup>
         <app-xy-chart *ngIf="!emptyError" class="chart"></app-xy-chart>
         <app-pie-chart *ngIf="!emptyError" class="chart"></app-pie-chart>
     </div>
-    <div class="tree-container">
-        <app-tree [treeData]="monthQuestionTree"></app-tree>
-    </div>
-</div>
+</div> 

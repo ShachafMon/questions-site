@@ -1,7 +1,8 @@
 <div class="center container">
-    <div>
-        <span *ngIf="node.childrens.length > 0" class="clickable" (click)="onShowChilderns()"> > </span><input #checkBox
-            type="checkbox" (change)="onCheckedChange(checkBox.checked)" [(ngModel)]="node.checked"> {{node.name}}
+    <div class="name">
+        <span *ngIf="node.childrens.length > 0" class="clickable" (click)="onShowChilderns()"> > </span>
+        <input #checkBox type="checkbox" (change)="onCheckedChange(checkBox.checked)" [(ngModel)]="node.checked">
+        <span>{{node.name}}</span>
     </div>
     <div class="inner-container" *ngIf="showChildren">
         <app-node *ngFor="let innerNode of node.childrens" [node]="innerNode" (onChecked)="onChildChecked($event)">

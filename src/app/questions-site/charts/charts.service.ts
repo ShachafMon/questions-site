@@ -15,8 +15,6 @@ export class ChartsService implements OnDestroy {
     public emptyArraySubj: BehaviorSubject<boolean>;
     hoursCounterDic: { [hour: number]: number } = {};
 
-
-
     treeData: ITreeNode[] = [];
 
     questions: IQuestion[];

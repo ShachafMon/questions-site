@@ -14,3 +14,13 @@
 .clickable {
     cursor: pointer;
 }
+.name{
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.name:hover{
+    overflow:visible;
+    white-space: normal;
+}

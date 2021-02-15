@@ -49,7 +49,7 @@ export class NodeComponent implements OnInit {
   onChildChecked(value: boolean) {
     if (value) {
       if (this.isAllChildrensChecked()) {
-        this.node.checked = true;
+        this.node.checked = this.isAllChildrensChecked()
       } else {
         this.node.checked = false;
       }
