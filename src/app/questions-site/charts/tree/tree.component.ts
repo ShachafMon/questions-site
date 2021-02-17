@@ -1,6 +1,4 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { FADE_CLASS_NAME_MAP } from 'ng-zorro-antd';
-import { Subscription } from 'rxjs';
 import { ITreeNode } from 'src/app/shared/models/treenode.model';
 
 @Component({
@@ -9,49 +7,49 @@ import { ITreeNode } from 'src/app/shared/models/treenode.model';
   styleUrls: ['./tree.component.css']
 })
 export class TreeComponent implements OnInit, OnChanges {
-  showedTreeData: ITreeNode[];
-  private _treeData: ITreeNode[];
   constructor() { }
 
-  @Input()
-  set treeData(val: ITreeNode[]) {
-    if (val) {
-      this._treeData = val;
-      this.showedTreeData = [...val];
-    }
+  @Input() treeData: ITreeNode[];
+
+  private _searchValue: string;
+  set searchValue(val: string) {
+    this._searchValue = val;
+    this.onSearch(val);
   }
-  get treeData(): ITreeNode[] {
-    return this._treeData;
+  get searchValue() {
+    return this._searchValue;
   }
 
+  showAll: boolean = true;
+  @Input() showAllBox: boolean = false;
   ngOnInit(): void {
   }
 
-  resetShowed() {
-    this.showedTreeData = [];
-    this.showedTreeData = [...this.treeData];
-  }
   onSearch(searchVal: string) {
-    console.log(this.treeData);
-    console.log(this.showedTreeData);
-
-    this.showedTreeData.forEach(element => {
-      this.filterNode(searchVal, element);
-    });
-    this.showedTreeData = this.showedTreeData.filter(item => item.childrens.length > 0);
+    this.treeData.forEach(item => this.searchInChilds(searchVal, item));
   }
 
-  filterNode(searchVal: string, currentNode: ITreeNode) {
-    if (currentNode.childrens.length > 0) {
-      currentNode.childrens.forEach(element => {
-        if (element.childrens.length > 0)
-          this.filterNode(searchVal, element)
-      });
-      currentNode.childrens = currentNode.childrens.filter(item => item.name.toLowerCase().includes(searchVal.toLowerCase()));
+  searchInChilds(searchVal: string, node: ITreeNode): number {
+    debugger;
+    let count = 0;
+    node.name.toLowerCase().includes(searchVal.toLowerCase()) ? node.show = true : node.show = false;
+    if (node.childrens.length > 0) {
+      node.childrens.forEach(item => count += this.searchInChilds(searchVal, item));
+      count > 0 ? node.show = true : node.show = false;
     }
+    if (node.show) count += 1;
+    console.log(this.treeData);
+    return count;
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    this.treeData = changes?.treeData?.currentValue;
+    if (this.showAllBox) {
+      if (changes?.treeData?.currentValue)
+        this.treeData = [{ name: 'All', childrens: [...changes?.treeData?.currentValue], show: true }]
+    }
+    else
+      this.treeData = changes?.treeData?.currentValue;
   }
+
+
 }

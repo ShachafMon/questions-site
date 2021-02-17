@@ -1,3 +1,5 @@
-<input type="text" (keyup)="onSearch(searchBox.value)" #searchBox>
-<app-node *ngFor="let node of showedTreeData" [node]="node">Loading
-</app-node>
+<div class="inner-container">
+    <input type="text" placeholder="Seach" [(ngModel)]="searchValue" #searchBox>
+    <app-node *ngFor="let node of treeData" [node]="node">Loading
+    </app-node>
+</div>

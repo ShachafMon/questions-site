@@ -13,9 +13,9 @@ export class ChartsService implements OnDestroy {
     public chartdataSubj: BehaviorSubject<any[]>;
     public monthQuestionTreeDataSubj: BehaviorSubject<ITreeNode[]>;
     public emptyArraySubj: BehaviorSubject<boolean>;
-    hoursCounterDic: { [hour: number]: number } = {};
+    hoursCounterDic: { [hour: number]: number };
 
-    treeData: ITreeNode[] = [];
+    treeData: ITreeNode[];
 
     questions: IQuestion[];
     constructor(private questionService: QuestionsService) {
@@ -52,6 +52,7 @@ export class ChartsService implements OnDestroy {
     }
 
     resetChartData() {
+        this.treeData = [];
         this.hoursCounterDic = {};
         this.chartdata = [{
             "day": "Sunday",
@@ -86,12 +87,12 @@ export class ChartsService implements OnDestroy {
                     let month = currentDate.toLocaleString('en-US', { month: 'long' });
                     let data = this.treeData.find(item => item.name == month);
                     if (data) {
-                        data.childrens.push({ name: ques.name, checked: false, childrens: [] });
+                        data.childrens.push({ name: ques.name, childrens: [], show: true });
                     }
                     else {
-                        this.treeData.push({ name: month, checked: false, childrens: [{ name: ques.name, childrens: [], checked: false }] });
+                        this.treeData.push({ name: month, childrens: [{ name: ques.name, childrens: [{name:'bi',childrens:[],show:true}], show: true }], show: true });
                     }
-                    
+
                     let hour = currentDate.getHours();
                     let dicHour = this.hoursCounterDic[hour];
                     dicHour ? this.hoursCounterDic[hour] = dicHour + 1 : this.hoursCounterDic[hour] = 1;

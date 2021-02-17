@@ -1,0 +1,26 @@
+.container {
+    width: fit-content;
+}
+
+.inner-container {
+    width       : fit-content;
+    padding-left: 25px;
+}
+
+.flex-end {
+    justify-content: flex-end;
+}
+
+.clickable {
+    cursor: pointer;
+}
+.name{
+    width: 150px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.name:hover{
+    overflow:visible;
+    white-space: normal;
+}

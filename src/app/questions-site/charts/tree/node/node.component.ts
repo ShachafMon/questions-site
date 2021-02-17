@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { ITreeNode } from 'src/app/shared/models/treenode.model';
 
 @Component({
@@ -6,11 +6,13 @@ import { ITreeNode } from 'src/app/shared/models/treenode.model';
   templateUrl: './node.component.html',
   styleUrls: ['./node.component.css']
 })
-export class NodeComponent implements OnInit {
+export class NodeComponent implements OnInit, OnChanges {
 
   constructor() { }
   @Input() node: ITreeNode;
-  @Output() onChecked: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() onChecked: EventEmitter<ITreeNode> = new EventEmitter<ITreeNode>();
+  @ViewChild('checkBox') checkBox;
+
   showChildren: boolean = true;
 
   ngOnInit(): void {
@@ -25,50 +27,82 @@ export class NodeComponent implements OnInit {
       this.checkChildrens(this.node);
     else
       this.unCheckChildrens(this.node);
-    this.onChecked.emit(value);
+    this.onChecked.emit(this.node);
   }
 
   checkChildrens(node: ITreeNode) {
+    if (node.show) {
+      node.checked = true;
+      node.indeterminate = false;
+      this.checkBox.nativeElement.indeterminate = false;
+    }
     if (node.childrens.length > 0) {
       node.childrens.forEach(element => {
-        this.checkChildrens(element);
+        if (node.show)
+          this.checkChildrens(element);
       });
     }
-    node.checked = true;
   }
 
   unCheckChildrens(node: ITreeNode) {
+    if (node.show) {
+      node.checked = false;
+      this.checkBox.nativeElement.indeterminate = false;
+      node.indeterminate = false;
+    }
     if (node.childrens.length > 0) {
       node.childrens.forEach(element => {
-        this.unCheckChildrens(element);
+        if (node.show)
+          this.unCheckChildrens(element);
       });
     }
-    node.checked = false;
-
   }
-  onChildChecked(value: boolean) {
-    if (value) {
-      if (this.isAllChildrensChecked()) {
-        this.node.checked = this.isAllChildrensChecked()
-      } else {
-        this.node.checked = false;
+
+  onChildChecked(value: ITreeNode) {
+    this.markCheckBox();
+    this.onChecked.emit(this.node);
+  }
+
+  markCheckBox() {
+    let checkedCount = 0;
+    let showedCount = 0;
+    let indeterminateCount = 0;
+    for (let index = 0; index < this.node.childrens.length; index++) {
+      if (this.node.childrens[index].show) {
+        showedCount += 1;
+        if (this.node.childrens[index].checked) {
+          checkedCount += 1;
+        }
+        else if (this.node.childrens[index].indeterminate)
+          indeterminateCount += 1;
       }
     }
-    else {
+    if (indeterminateCount > 0) {
+      this.checkBox.nativeElement.checked = false;
+      this.checkBox.nativeElement.indeterminate = true;
+      this.node.indeterminate = true;
       this.node.checked = false;
     }
-    this.onChecked.emit(value);
-  }
-
-  isAllChildrensChecked(): boolean {
-    let res = true;
-    for (let index = 0; index < this.node.childrens.length; index++) {
-      if (!this.node.childrens[index].checked) {
-        res = false;
-        break;
-      }
+    else if (checkedCount == 0) {
+      this.checkBox.nativeElement.checked = false;
+      this.checkBox.nativeElement.indeterminate = false;
+      this.node.indeterminate = false;
+      this.node.checked = false;
     }
-    return res;
+    else if (checkedCount < showedCount) {
+      this.checkBox.nativeElement.checked = false;
+      this.checkBox.nativeElement.indeterminate = true;
+      this.node.indeterminate = true;
+      this.node.checked = false;
+    }
+    else {
+      this.checkBox.nativeElement.checked = true;
+      this.checkBox.nativeElement.indeterminate = false;
+      this.node.indeterminate = false;
+      this.node.checked = true;
+    }
   }
-
+  ngOnChanges(changes: SimpleChanges) {
+    this.node = changes?.node?.currentValue;
+  }
 }
