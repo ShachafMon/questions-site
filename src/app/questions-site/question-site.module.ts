@@ -30,7 +30,7 @@ import { NodeComponent } from './charts/tree/node/node.component';
     RouterModule,
     SiteRoutingModule,
     NzDatePickerModule,
-    NzIconModule
+    NzIconModule,
   ],
   providers: [QuestionsService],
   exports: [ManagerComponent, LoginComponent, NavbarComponent]

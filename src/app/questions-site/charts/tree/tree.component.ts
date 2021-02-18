@@ -30,7 +30,6 @@ export class TreeComponent implements OnInit, OnChanges {
   }
 
   searchInChilds(searchVal: string, node: ITreeNode): number {
-    debugger;
     let count = 0;
     node.name.toLowerCase().includes(searchVal.toLowerCase()) ? node.show = true : node.show = false;
     if (node.childrens.length > 0) {
@@ -38,7 +37,6 @@ export class TreeComponent implements OnInit, OnChanges {
       count > 0 ? node.show = true : node.show = false;
     }
     if (node.show) count += 1;
-    console.log(this.treeData);
     return count;
   }
 

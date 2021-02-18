@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { NewEditService } from './new-edit-question/new-edit.service';
-import { AuthenticationService } from '../../Services/authentication.service';
-import { QuestionsService } from '../../Services/questions.service';
 import { IQuestion } from 'src/app/shared/models/question.model';
+import * as fromApp from '../../../store/app.reducer'
+import { Store } from '@ngrx/store';
+import * as QuestionListActions from '../question-list/store/question-list.actions'
 
 @Component({
   selector: 'app-question-list',
@@ -21,21 +20,25 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   currentQuestion: IQuestion;
   removeQuesMsg = () => `Are you sure you want to remove ${this.currentQuestion.name}`;
 
-  constructor(private questionService: QuestionsService, private newEditService: NewEditService) {
+  constructor(private store: Store<fromApp.AppState>) {
   }
 
   ngOnInit(): void {
-  
-    this.subsuribes.push(this.questionService.questionsSubj.subscribe(data => {
-      if (data)
-        this.questions = data;
+    this.subsuribes.push(this.store.select('questionList').subscribe(data => {
+      if (data) {
+        this.questions = data.questions;
+        this.currentQuestion = data.selectedQuestion;
+      }
     }));
-    this.subsuribes.push(this.newEditService.showEditAddCompSbj.subscribe(data => this.showNewEditComp = data));
   }
-
+  exitEdit()
+  {
+    this.showNewEditComp = false;
+    this.setCurrentQuestion(null);
+  }
   OnCreateNewQuestion() {
+    this.setCurrentQuestion(null);
     this.showNewEditComp = true;
-    this.newEditService.setCurrentQuestion(undefined);
   }
 
   ngOnDestroy() {
@@ -43,23 +46,26 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   }
 
   onEditQuestion(question: IQuestion) {
-    this.newEditService.setCurrentQuestion(question);
+    this.setCurrentQuestion(question);
     this.showNewEditComp = true;
   }
 
   onRemoveQuestion(question: IQuestion) {
-    this.currentQuestion = question;
+    this.setCurrentQuestion(question);
     this.deletePopup = true;
   }
 
   removeQuestion() {
-    this.questionService.removeQuestion(this.currentQuestion);
-    this.newEditService.reset();
+    this.store.dispatch(new QuestionListActions.RemoveQuestion(this.currentQuestion));
     this.exitPopup();
   }
 
+  setCurrentQuestion(question: IQuestion) {
+    this.store.dispatch(new QuestionListActions.SetSelectedQuestion(question));
+  }
+
   exitPopup() {
-    this.currentQuestion = null;
+    this.setCurrentQuestion(null);
     this.deletePopup = false;
     this.infoPopup = false;
   }
@@ -87,7 +93,8 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   }
 
   search(search: string) {
-    this.questions = this.questionService.questions.filter(ques => ques.name.toLowerCase().includes(search.toLowerCase()));
+    this.questions = this.questions.filter(ques => ques.name.toLowerCase().includes(search.toLowerCase()));
   }
+
 
 }

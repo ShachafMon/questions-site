@@ -37,7 +37,7 @@
             <button (click)="OnCreateNewQuestion()">Add Question</button>
         </div>
     </div>
-    <app-new *ngIf="showNewEditComp"></app-new>
+    <app-new (onExit)="exitEdit()" *ngIf="showNewEditComp"></app-new>
 </div>
 
 <app-popup *ngIf="deletePopup" class="popup" [btn1content]="'No'" [btn2content]="'Yes'" [header]='removeQuesMsg()' [msg]="currentQuestion.description"

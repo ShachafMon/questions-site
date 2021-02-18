@@ -6,7 +6,7 @@
     </div>
     <div class="inner-container" *ngIf="showChildren">
         <app-node *ngFor="let innerNode of node.childrens" [node]="innerNode"
-            (onChecked)="onChildChecked($event)">
+            (onChecked)="onChildChecked($event)" >
         </app-node>
     </div>
 </div>

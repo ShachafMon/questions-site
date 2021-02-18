@@ -2,7 +2,8 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { IQuestion } from 'src/app/shared/models/question.model';
 import { ITreeNode } from 'src/app/shared/models/treenode.model';
-import { QuestionsService } from '../Services/questions.service';
+import * as fromApp from '../../store/app.reducer'
+import { Store } from '@ngrx/store';
 
 @Injectable({
     providedIn: 'root'
@@ -18,14 +19,15 @@ export class ChartsService implements OnDestroy {
     treeData: ITreeNode[];
 
     questions: IQuestion[];
-    constructor(private questionService: QuestionsService) {
+    constructor(private store: Store<fromApp.AppState>) {
         this.chartdataSubj = new BehaviorSubject<any[]>(undefined);
         this.monthQuestionTreeDataSubj = new BehaviorSubject<ITreeNode[]>(undefined);
         this.emptyArraySubj = new BehaviorSubject<boolean>(false);
-        this.subs.push(this.questionService.questionsSubj.subscribe(data => {
+
+        this.subs.push(this.store.select('questionList').subscribe(data => {
             if (data) {
                 this.resetChartData();
-                this.questions = data;
+                this.questions = data.questions;
                 this.logicInfo(this.questions);
             }
         }));
@@ -90,7 +92,7 @@ export class ChartsService implements OnDestroy {
                         data.childrens.push({ name: ques.name, childrens: [], show: true });
                     }
                     else {
-                        this.treeData.push({ name: month, childrens: [{ name: ques.name, childrens: [{name:'bi',childrens:[],show:true}], show: true }], show: true });
+                        this.treeData.push({ name: month, childrens: [{ name: ques.name, childrens: [], show: true }], show: true });
                     }
 
                     let hour = currentDate.getHours();
