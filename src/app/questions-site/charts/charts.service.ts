@@ -89,10 +89,10 @@ export class ChartsService implements OnDestroy {
                     let month = currentDate.toLocaleString('en-US', { month: 'long' });
                     let data = this.treeData.find(item => item.name == month);
                     if (data) {
-                        data.childrens.push({ name: ques.name, childrens: [], show: true });
+                        data.childrens.push({ name: `${ques.id} - ${ques.name}`, childrens: [], show: true });
                     }
                     else {
-                        this.treeData.push({ name: month, childrens: [{ name: ques.name, childrens: [], show: true }], show: true });
+                        this.treeData.push({ name: month, childrens: [{ name: `${ques.id} - ${ques.name}`, childrens: [], show: true }], show: true });
                     }
 
                     let hour = currentDate.getHours();

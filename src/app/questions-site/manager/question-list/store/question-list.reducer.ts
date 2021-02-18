@@ -12,7 +12,7 @@ const initialState = {
     selectedQuestion: null
 };
 
-export function questionListReducer(state = initialState, action: QuestionListActions.QuestionListActions) {
+export function questionListReducer(state = initialState, action) {
     switch (action.type) {
         case QuestionListActions.ADD_QUESTION:
             return {
@@ -27,8 +27,7 @@ export function questionListReducer(state = initialState, action: QuestionListAc
         case QuestionListActions.UPDATE_QUESTION:
             const index = state.questions.findIndex(item => item.id === action.payload.id);
             let updatedQuestions = [...state.questions];
-            updatedQuestions[index].name = action.payload.name;
-            updatedQuestions[index].description = action.payload.description;
+            updatedQuestions[index] = action.payload;
 
             return {
                 ...state,

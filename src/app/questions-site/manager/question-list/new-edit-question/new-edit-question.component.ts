@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/cor
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { HttpService } from 'src/app/questions-site/Services/http.service';
 import { IQuestion } from 'src/app/shared/models/question.model';
 import * as fromApp from '../../../../store/app.reducer';
 import { AddQuestion, UpdateQuestion } from '../store/question-list.actions';
@@ -13,11 +14,11 @@ import { AddQuestion, UpdateQuestion } from '../store/question-list.actions';
 })
 export class NewComponent implements OnInit, OnDestroy {
 
-  constructor(private formBuilder: FormBuilder, private store: Store<fromApp.AppState>) { }
+  constructor(private formBuilder: FormBuilder, private store: Store<fromApp.AppState>, private httpService: HttpService) { }
   subs: Subscription[] = [];
   currentQuestion: IQuestion;
   newQuestionForm: FormGroup;
-  @Output() onExit : EventEmitter<null> = new EventEmitter<null>();
+  @Output() onExit: EventEmitter<null> = new EventEmitter<null>();
 
   ngOnInit(): void {
     this.subs.push(this.store.select('questionList').subscribe(data => {
@@ -40,19 +41,33 @@ export class NewComponent implements OnInit, OnDestroy {
   }
 
   submitQuestion() {
-    debugger;
     if (!this.currentQuestion) {
       this.newQuestionForm.controls['creationDate'].setValue(new Date());
-      this.store.dispatch(new AddQuestion(this.newQuestionForm.value));
+      this.httpService.CreateQuestion(this.newQuestionForm.value).subscribe(
+        data => {
+          this.store.dispatch(new AddQuestion(data['qa']));
+          this.exit();
+        },
+        error => {
+
+        }
+      )
     } else {
       this.newQuestionForm.controls['id'].setValue(this.currentQuestion.id);
       this.newQuestionForm.controls['creationDate'].setValue(new Date(this.currentQuestion.creationDate));
-      this.store.dispatch(new UpdateQuestion(this.newQuestionForm.value));
+      this.httpService.UpdateQuestion(this.newQuestionForm.value).subscribe(
+        data => {
+          this.store.dispatch(new UpdateQuestion(this.newQuestionForm.value));
+          this.exit();
+        },
+        error => {
+
+        }
+      )
     }
   }
 
   exit() {
-    
     this.onExit.emit();
   }
 

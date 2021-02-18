@@ -26,7 +26,7 @@ export class RemoveQuestion implements Action {
 }
 
 export class UpdateQuestion implements Action {
-    type = UPDATE_QUESTION;
+    readonly type = UPDATE_QUESTION;
 
     constructor(public payload: IQuestion) { }
 }

@@ -4,6 +4,7 @@ import { IQuestion } from 'src/app/shared/models/question.model';
 import * as fromApp from '../../../store/app.reducer'
 import { Store } from '@ngrx/store';
 import * as QuestionListActions from '../question-list/store/question-list.actions'
+import { HttpService } from '../../Services/http.service';
 
 @Component({
   selector: 'app-question-list',
@@ -20,7 +21,7 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   currentQuestion: IQuestion;
   removeQuesMsg = () => `Are you sure you want to remove ${this.currentQuestion.name}`;
 
-  constructor(private store: Store<fromApp.AppState>) {
+  constructor(private store: Store<fromApp.AppState>, private httpService: HttpService) {
   }
 
   ngOnInit(): void {
@@ -31,8 +32,7 @@ export class QuestionListComponent implements OnInit, OnDestroy {
       }
     }));
   }
-  exitEdit()
-  {
+  exitEdit() {
     this.showNewEditComp = false;
     this.setCurrentQuestion(null);
   }
@@ -56,8 +56,12 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   }
 
   removeQuestion() {
-    this.store.dispatch(new QuestionListActions.RemoveQuestion(this.currentQuestion));
-    this.exitPopup();
+    this.httpService.DeleteQuestion(this.currentQuestion.id).subscribe(data => {
+      this.store.dispatch(new QuestionListActions.RemoveQuestion(this.currentQuestion));
+      this.exitPopup();
+    },
+      error => alert(error['message'])
+    );
   }
 
   setCurrentQuestion(question: IQuestion) {
@@ -95,6 +99,4 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   search(search: string) {
     this.questions = this.questions.filter(ques => ques.name.toLowerCase().includes(search.toLowerCase()));
   }
-
-
 }
