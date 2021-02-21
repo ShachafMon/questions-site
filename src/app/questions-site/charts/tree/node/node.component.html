@@ -1,12 +1,12 @@
 <div class="center container" *ngIf="node.show">
     <div class="name">
         <span *ngIf="node.childrens.length > 0" class="clickable" (click)="onShowChilderns()"> <i nz-icon [nzType]="showChildren? 'down':'right'" nzTheme="outline"></i> </span>
-        <input #checkBox type="checkbox" (change)="onCheckedChange(checkBox.checked)" [indeterminate]="node.indeterminate" [(ngModel)]="node.checked">
+        <input #checkBox type="checkbox" (change)="onCheckedChange(checkBox.checked)" [indeterminate]="node.indeterminate" class="clickable" [(ngModel)]="node.checked">
         <span>{{node.name}}</span>
     </div>
     <div class="inner-container" *ngIf="showChildren">
         <app-node *ngFor="let innerNode of node.childrens" [node]="innerNode"
-            (onChecked)="onChildChecked($event)" >
+            (onChecked)="onChildChecked($event)">
         </app-node>
     </div>
 </div>

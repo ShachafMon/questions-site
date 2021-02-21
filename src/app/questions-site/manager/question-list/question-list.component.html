@@ -1,16 +1,14 @@
 <div class="flex main-container">
-    <div class="flex flex-center flex-column">
+    <div class="flex center flex-column">
         <div class="flex space-between window-width padding">
             <div id="searchbar">
-                <input #searchInput type="text" (keyup)="search(searchInput.value)">
-                <i>Search</i>
+                <input #searchInput type="text" [(ngModel)]="searchValue" placeholder="Search">
             </div>
             <div>
-                <select #selection (change)="orderBy(selection.value)">
-                    <option value="" disabled selected hidden>Order by</option>
-                    <option value="Id">Id</option>
-                    <option value="Name">Name</option>
-                    <option value="Date">Date</option>
+                <span>Order by : </span>
+                <select #selection [(ngModel)]="selectedFilter">
+                    <option value="" hidden>Order by</option>
+                    <option *ngFor='let option of (filterTypesKeys | keyvalue)' [value]='option.key'>{{option.value}}</option>
                 </select>
             </div>
         </div>
@@ -22,7 +20,7 @@
                 <th id="functionsth"></th>
             </thead>
             <tbody>
-                <tr *ngFor="let question of questions">
+                <tr *ngFor="let question of (questions | searchpipe : searchValue | filterpipe : selectedFilter )">
                     <td (click)="showInfo(question)" [innerHTML]="question.id | idhtmlpipe"></td>
                     <td (click)="showInfo(question)">{{question.name}}</td>
                     <td (click)="showInfo(question)">{{question.creationDate | date:'shortDate'}}</td>
@@ -40,8 +38,8 @@
     <app-new (onExit)="exitEdit()" *ngIf="showNewEditComp"></app-new>
 </div>
 
-<app-popup *ngIf="deletePopup" class="popup" [btn1content]="'No'" [btn2content]="'Yes'" [header]='removeQuesMsg()' [msg]="currentQuestion.description"
-    (onBtn1Clicked)="exitPopup()" (onBtn2Clicked)="removeQuestion()" ></app-popup>
+<app-popup *ngIf="deletePopup" class="popup" [btn1content]="'No'" [btn2content]="'Yes'" [header]='removeQuesMsg()'
+    [msg]="currentQuestion.description" (onBtn1Clicked)="exitPopup()" (onBtn2Clicked)="removeQuestion()"></app-popup>
 
 <app-popup class="popup" (onBtn1Clicked)="exitPopup()" [btn1content]="'Ok'" *ngIf="infoPopup"
     [msg]="currentQuestion.description" [header]="currentQuestion.name"></app-popup>

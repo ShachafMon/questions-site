@@ -15,10 +15,9 @@ export class ChartsService implements OnDestroy {
     public monthQuestionTreeDataSubj: BehaviorSubject<ITreeNode[]>;
     public emptyArraySubj: BehaviorSubject<boolean>;
     hoursCounterDic: { [hour: number]: number };
-
     treeData: ITreeNode[];
-
     questions: IQuestion[];
+
     constructor(private store: Store<fromApp.AppState>) {
         this.chartdataSubj = new BehaviorSubject<any[]>(undefined);
         this.monthQuestionTreeDataSubj = new BehaviorSubject<ITreeNode[]>(undefined);

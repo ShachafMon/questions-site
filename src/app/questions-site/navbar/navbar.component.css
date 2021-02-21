@@ -8,7 +8,9 @@ ul {
     top             : 0;
     width           : 100%;
 }
-
+.main{
+    z-index: 1;
+}
 li {
     float: left;
 }

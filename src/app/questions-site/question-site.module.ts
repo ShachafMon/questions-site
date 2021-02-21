@@ -12,16 +12,17 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { QuestionListComponent } from './manager/question-list/question-list.component';
 import { PieChartComponent } from './charts/pie-chart/pie-chart.component';
 import { XyChartComponent } from './charts/xy-chart/xy-chart.component';
-import { QuestionsService } from './Services/questions.service';
 import { NzDatePickerModule, NzIconModule } from 'ng-zorro-antd';
 import { IdHtmlTransform } from '../shared/pipes/id-html.pipe';
 import { PopupComponent } from './popup/popup.component';
 import { TreeComponent } from './charts/tree/tree.component';
 import { NodeComponent } from './charts/tree/node/node.component';
+import { SearchPipe } from '../shared/pipes/search.pipe';
+import { FilterPipe } from '../shared/pipes/filter.pipr';
 
 
 @NgModule({
-  declarations: [LoginComponent, ManagerComponent, NewComponent, ChartsComponent, NavbarComponent, QuestionListComponent, PieChartComponent, XyChartComponent, IdHtmlTransform, PopupComponent, TreeComponent, NodeComponent],
+  declarations: [FilterPipe, SearchPipe, LoginComponent, ManagerComponent, NewComponent, ChartsComponent, NavbarComponent, QuestionListComponent, PieChartComponent, XyChartComponent, IdHtmlTransform, PopupComponent, TreeComponent, NodeComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -32,7 +33,7 @@ import { NodeComponent } from './charts/tree/node/node.component';
     NzDatePickerModule,
     NzIconModule,
   ],
-  providers: [QuestionsService],
+  providers: [],
   exports: [ManagerComponent, LoginComponent, NavbarComponent]
 })
 export class QuestionSiteModule { }

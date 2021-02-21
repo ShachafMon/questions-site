@@ -49,7 +49,7 @@ export class NewComponent implements OnInit, OnDestroy {
           this.exit();
         },
         error => {
-
+          alert(error);
         }
       )
     } else {
@@ -61,7 +61,7 @@ export class NewComponent implements OnInit, OnDestroy {
           this.exit();
         },
         error => {
-
+          alert(error);
         }
       )
     }

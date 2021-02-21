@@ -60,8 +60,9 @@ body {
     align-items    : center;
 }
 
+
 .center {
-    align-self: center;
+    align-items: center;
 }
 
 .popup {
