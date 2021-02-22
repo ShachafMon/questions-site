@@ -14,13 +14,25 @@
 .clickable {
     cursor: pointer;
 }
-.name{
-    width: 150px;
-    overflow: hidden;
+
+.name {
+    width        : 150px;
+    overflow     : hidden;
     text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space  : nowrap;
 }
-.name:hover{
-    overflow:visible;
+
+.name:hover {
+    overflow   : visible;
     white-space: normal;
+}
+
+.close {
+    transform: rotateZ(-90deg);
+    transition-duration: 0.3s;
+}
+
+.open {
+    transform: rotateZ(0deg);
+    transition-duration: 0.3s;
 }
