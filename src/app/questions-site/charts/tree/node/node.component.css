@@ -33,6 +33,6 @@
 }
 
 .open {
-    transform: rotateZ(0deg);
+    transform: rotateZ();
     transition-duration: 0.3s;
 }

@@ -43,27 +43,14 @@ export class NewComponent implements OnInit, OnDestroy {
   submitQuestion() {
     if (!this.currentQuestion) {
       this.newQuestionForm.controls['creationDate'].setValue(new Date());
-      this.httpService.CreateQuestion(this.newQuestionForm.value).subscribe(
-        data => {
-          this.store.dispatch(new AddQuestion(data['qa']));
-          this.exit();
-        },
-        error => {
-          alert(error);
-        }
-      )
+      this.store.dispatch(new AddQuestion(this.newQuestionForm.value));
+      this.exit();
+
     } else {
       this.newQuestionForm.controls['id'].setValue(this.currentQuestion.id);
       this.newQuestionForm.controls['creationDate'].setValue(new Date(this.currentQuestion.creationDate));
-      this.httpService.UpdateQuestion(this.newQuestionForm.value).subscribe(
-        data => {
-          this.store.dispatch(new UpdateQuestion(this.newQuestionForm.value));
-          this.exit();
-        },
-        error => {
-          alert(error);
-        }
-      )
+      this.store.dispatch(new UpdateQuestion(this.newQuestionForm.value));
+      this.exit();
     }
   }
 

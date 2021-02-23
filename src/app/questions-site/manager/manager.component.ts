@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpService } from '../Services/http.service';
 import * as fromApp from '../../store/app.reducer';
 import { Store } from '@ngrx/store';
-import { SetQuestions } from '../manager/question-list/store/question-list.actions'
+import { LoadQuestions, SetError } from '../manager/question-list/store/question-list.actions'
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -12,11 +12,22 @@ import { SetQuestions } from '../manager/question-list/store/question-list.actio
 })
 export class ManagerComponent implements OnInit {
 
-  constructor(private httpService: HttpService, private store: Store<fromApp.AppState>) { }
-
+  constructor(private store: Store<fromApp.AppState>) { }
+  error: HttpErrorResponse = undefined;
+  showError: boolean = false;
   ngOnInit() {
-    this.httpService.GetAllQuestions().subscribe(data => {
-      this.store.dispatch(new SetQuestions(data['questions']));
-    })
+    this.store.select('questionList').subscribe(store => {
+      if (store.error) {
+        this.error = store.error;
+        this.showError = true;
+      }
+    });
+    this.store.dispatch(new LoadQuestions());
+
+  }
+
+  onOkClicked() {
+    this.showError = false;
+    this.store.dispatch(new SetError(undefined));
   }
 }

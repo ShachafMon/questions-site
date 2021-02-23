@@ -28,12 +28,8 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   constructor(private store: Store<fromApp.AppState>, private httpService: HttpService) {
   }
 
-  onFilter() {
-    console.log(this.selectedFilter);
-
-  }
   ngOnInit(): void {
-    this.subsuribes.push(this.store.select('questionList').subscribe(data => {
+    this.subsuribes.push(this.store.select((store)=>store.questionList).subscribe(data => {
       if (data) {
         this.questions = data.questions;
         this.currentQuestion = data.selectedQuestion;
@@ -64,12 +60,8 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   }
 
   removeQuestion() {
-    this.httpService.DeleteQuestion(this.currentQuestion.id).subscribe(data => {
       this.store.dispatch(new QuestionListActions.RemoveQuestion(this.currentQuestion));
       this.exitPopup();
-    },
-      error => alert(error['message'])
-    );
   }
 
   setCurrentQuestion(question: IQuestion) {

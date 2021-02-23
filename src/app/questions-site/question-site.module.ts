@@ -19,6 +19,7 @@ import { TreeComponent } from './charts/tree/tree.component';
 import { NodeComponent } from './charts/tree/node/node.component';
 import { SearchPipe } from '../shared/pipes/search.pipe';
 import { FilterPipe } from '../shared/pipes/filter.pipr';
+import { QuestionListEffects } from './manager/question-list/store/question-list.effects';
 
 
 @NgModule({
@@ -33,7 +34,7 @@ import { FilterPipe } from '../shared/pipes/filter.pipr';
     NzDatePickerModule,
     NzIconModule,
   ],
-  providers: [],
+  providers: [QuestionListEffects],
   exports: [ManagerComponent, LoginComponent, NavbarComponent]
 })
 export class QuestionSiteModule { }

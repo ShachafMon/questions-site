@@ -1,4 +1,4 @@
-<nz-range-picker [(ngModel)]="selectedDate" (ngModelChange)="dateSelected()"></nz-range-picker>
+<nz-range-picker [(ngModel)]="selectedDate" class="date-picker" (ngModelChange)="dateSelected()"></nz-range-picker>
 <div class="flex streach">
     <div class="tree-container">
         <app-tree [showAllBox]='true' [treeData]="monthQuestionTree"></app-tree>
@@ -9,4 +9,4 @@
         <app-xy-chart *ngIf="!emptyError" class="chart"></app-xy-chart>
         <app-pie-chart *ngIf="!emptyError" class="chart"></app-pie-chart>
     </div>
-</div> 
+</div>

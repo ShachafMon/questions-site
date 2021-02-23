@@ -15,6 +15,8 @@ import { registerLocaleData } from '@angular/common';
 import he from '@angular/common/locales/he';
 import { StoreModule } from '@ngrx/store';
 import * as fromApp from '../app/store/app.reducer'
+import { EffectsModule } from '@ngrx/effects';
+import { QuestionListEffects } from './questions-site/manager/question-list/store/question-list.effects';
 registerLocaleData(he);
 
 @NgModule({
@@ -24,6 +26,7 @@ registerLocaleData(he);
   imports: [
     BrowserModule,
     StoreModule.forRoot(fromApp.appReducer),
+    EffectsModule.forRoot([QuestionListEffects]),
     AppRoutingModule,
     QuestionSiteModule,
     HttpClientModule,

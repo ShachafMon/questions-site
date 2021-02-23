@@ -18,6 +18,9 @@ export class NodeComponent implements OnInit, OnChanges {
   ngOnInit(): void {
   }
 
+  onNameClicked() {
+    this.onCheckedChange(!this.node.checked);
+  }
   onShowChilderns() {
     this.showChildren = !this.showChildren;
   }

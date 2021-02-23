@@ -1,2 +1,4 @@
 <app-navbar></app-navbar>
 <router-outlet></router-outlet>
+<app-popup class="popup" *ngIf="showError" [header]="'Oops... Something went wrong :('" [msg]='error.error.message'
+    [btn1content]="'Ok'" (onBtn1Clicked)="onOkClicked()"></app-popup>

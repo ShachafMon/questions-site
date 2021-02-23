@@ -2,7 +2,7 @@
     <div class="name">
         <span *ngIf="node.childrens.length > 0" class="clickable" (click)="onShowChilderns()"> <i nz-icon [nzType]="'down'" [ngClass]="showChildren? 'open':'close'" nzTheme="outline"></i> </span>
         <input #checkBox type="checkbox" (change)="onCheckedChange(checkBox.checked)" [indeterminate]="node.indeterminate" class="clickable" [(ngModel)]="node.checked">
-        <span>{{node.name}}</span>
+        <span class="clickable" (click)="onNameClicked()">{{node.name}}</span>
     </div>
     <div class="inner-container" *ngIf="showChildren">
         <app-node *ngFor="let innerNode of node.childrens" [node]="innerNode"
